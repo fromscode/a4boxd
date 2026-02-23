@@ -17,7 +17,19 @@ async function getAllGenresSortedByMovies() {
     return rows;
 }
 
+async function getMoviesByGenreId(genreId: number) {
+    const query = `
+    select movie.*                             
+    from movie inner join movie_genre on movie.id = movie_genre.movie_id
+    where movie_genre.genre_id = $1;
+    `;
+
+    const { rows } = await pool.query(query, [genreId]);
+    return rows;
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
+    getMoviesByGenreId,
 };

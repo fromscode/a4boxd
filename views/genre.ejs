@@ -1,0 +1,22 @@
+<section>
+    <h1><%= genres[0].genre %></h1>
+    <p>Created by <%= genres[0].added_by %></p>
+    <p><%= genres[0].count %> movies available in this genre</p>
+
+    <div>
+        <ul>
+        <% movies.forEach(movie => { %>
+            <li>
+                <p><%= movie.title %> <%= movie.year %> <%= movie.director %></p>
+                <p><%= movie.description %></p>
+                <p>Added by <%= movie.added_by || 'Anonymous' %> on <%= movie.added_at.toDateString().split(' ').slice(1).join(' ') %></p>
+                <% if (movie.updated_by) {%>    
+                    <p>Last updated by <%= movie.updated_by %> 
+                        on <%= movie.updated_at.toDateString().split(' ').slice(1).join(' ') %></p>
+                <% } %>
+            </li>    
+        <% }); %>
+        </ul>
+    </div>
+</section>
+ 
