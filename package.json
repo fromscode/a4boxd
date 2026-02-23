@@ -5,7 +5,8 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "tsx watch src/app.ts"
+    "dev": "tsx watch src/app.ts",
+    "populateDB": "tsx src/db/populateDB.ts"
   },
   "dependencies": {
     "express": "^5.2.1",
