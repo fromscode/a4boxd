@@ -7,6 +7,7 @@ async function getHome(req: Request, res: Response) {
     const movies = await queries.getMoviesByGenreId(topGenreId);
 
     const renderData = {
+        genre: res.locals.genres[0],
         movies: movies,
     };
 

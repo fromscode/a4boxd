@@ -1,6 +1,7 @@
 import express from "express";
 
 import indexRouter from "./routes/index.js";
+import genreRouter from "./routes/genres.js";
 
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -14,6 +15,7 @@ app.set("views", path.join(import.meta.dirname, "..", "views"));
 
 app.use(genreCache);
 app.use(indexRouter);
+app.use("/genres", genreRouter);
 
 app.use(notFound);
 app.use(errorHandler);

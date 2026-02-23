@@ -8,9 +8,11 @@
     <body>
         <% locals.genres.forEach(element => { %>
             <ul>
+                <a href="<%= "/genres/" + element.id %>">
                     <li>
                         <%= element.genre %> ( <%= element.count %> )
                     </li>
+                </a>
             </ul>
         <% }); %>
 

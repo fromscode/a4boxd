@@ -1,7 +1,7 @@
 <section>
-    <h1><%= locals.genres[0].genre %></h1>
-    <p>Created by <%= locals.genres[0].added_by %></p>
-    <p><%= locals.genres[0].count %> movies available in this genre</p>
+    <h1><%= genre.genre %></h1>
+    <p>Created by <%= genre.added_by || 'Anonymous' %></p>
+    <p><%= genre.count || 0 %> movies available in this genre</p>
 
     <div>
         <ul>
