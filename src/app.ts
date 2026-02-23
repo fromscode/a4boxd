@@ -1,13 +1,13 @@
 import express from "express";
 
+import indexRouter from "./routes/index.js";
+
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Hello world");
-});
+app.use(indexRouter);
 
 app.use(notFound);
 app.use(errorHandler);
