@@ -6,11 +6,11 @@
         <title>Home</title>
     </head>
     <body>
-        <% genres.forEach(element => { %>
+        <% locals.genres.forEach(element => { %>
             <ul>
-                <li>
-                    <%= element.genre %> ( <%= element.count %> )
-                </li>
+                    <li>
+                        <%= element.genre %> ( <%= element.count %> )
+                    </li>
             </ul>
         <% }); %>
 
