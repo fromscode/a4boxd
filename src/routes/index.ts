@@ -1,8 +1,8 @@
 import express from "express";
+
+import indexController from "../controllers/index.js";
 const app = express();
 
-app.get("/", (req, res) => {
-    res.send("Hello World");
-});
+app.get("/", indexController.getHome);
 
 export default app;
