@@ -4,8 +4,12 @@ import indexRouter from "./routes/index.js";
 
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
+import path from "node:path";
 
 const app = express();
+
+app.set("view engine", "ejs");
+app.set("views", path.join(import.meta.dirname, "..", "views"));
 
 app.use(indexRouter);
 

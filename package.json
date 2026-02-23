@@ -5,15 +5,17 @@
   "scripts": {
     "build": "tsc",
     "start": "node dist/app.js",
-    "dev": "tsx watch src/app.ts",
+    "dev": "tsx watch --env-file=.env src/app.ts",
     "populateDB": "tsx src/db/populateDB.ts"
   },
   "dependencies": {
+    "ejs": "^4.0.1",
     "express": "^5.2.1",
     "express-validator": "^7.3.1",
     "pg": "^8.18.0"
   },
   "devDependencies": {
+    "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.6",
     "@types/express-validator": "^2.20.33",
     "@types/node": "^25.3.0",
