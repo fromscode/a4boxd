@@ -1,22 +1,28 @@
-<section>
+
     <h1><%= genre.genre %></h1>
     <p>Created by <%= genre.added_by || 'Anonymous' %></p>
     <p><%= genre.count || 0 %> movies available in this genre</p>
 
     <div>
-        <ul>
         <% movies.forEach(movie => { %>
-            <li>
+
+            <div className="card w-96 shadow-sm bg-amber-50">
+                <div className="card-body bg-amber-50">
+                  <h2 className="card-title bg-amber-50"><%= movie.title %></h2>
+                  <p><%= movie.year %> <%= movie.director %></p>
+                  </div>
+              </div>
+    
+
+            <!-- <li>
                 <p><%= movie.title %> <%= movie.year %> <%= movie.director %></p>
-                <p><%= movie.description %></p>
+                <p></p>
                 <p>Added by <%= movie.added_by || 'Anonymous' %> on <%= movie.added_at.toDateString().split(' ').slice(1).join(' ') %></p>
                 <% if (movie.updated_by) {%>    
                     <p>Last updated by <%= movie.updated_by %> 
                         on <%= movie.updated_at.toDateString().split(' ').slice(1).join(' ') %></p>
                 <% } %>
-            </li>    
+            </li>     -->
         <% }); %>
-        </ul>
     </div>
-</section>
  

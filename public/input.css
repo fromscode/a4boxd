@@ -6,14 +6,17 @@
 @plugin "daisyui/theme" {
     name: "dark";
     default: true;
-    --color-primary: oklch(15.3% 0.006 107.1);
-    --color-base-100: oklch(15.3% 0.006 107.1);
-    --color-secondary: teal;
+    --color-base-100: oklch(14.5% 0.008 326);
 }
 
 @font-face {
     font-family: Inter;
     src: url("/fonts/Inter.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: logo;
+    src: url("/fonts/a4boxd.ttf") format("truetype");
 }
 
 @theme {
