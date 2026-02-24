@@ -1,0 +1,9 @@
+<% locals.genres.forEach(element => { %>
+    <a href="<%= "/genres/" + element.id %>">
+        <li>
+            <button class="is-drawer-close:tooltip is-drawer-close:tooltip-right" data-tip="Homepage">
+              <span class="is-drawer-close:hidden"><%= element.genre %> ( <%= element.count %> )</span>
+            </button>
+          </li>
+    </a>
+<% }); %>
