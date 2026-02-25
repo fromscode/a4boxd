@@ -19,40 +19,31 @@
                 class="drawer-toggle"
                 checked
             />
-            <div class="drawer-content"><%- include('genre') %></div>
+            <div class="drawer-content ml-3"><%- include('genre') %></div>
 
-            <div class="drawer-side is-drawer-close:overflow-visible">
-                <label
-                    for="my-drawer-4"
-                    aria-label="close sidebar"
-                    class="drawer-overlay flex is-drawer-open:justify-end is-drawer-close:justify-center"
-                >
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        class="size-8 is-drawer-close:hidden"
+            <div
+                class="drawer-side is-drawer-close:overflow-hidden is-drawer-open:w-52 bg-mauve-900"
+            >
+                <div class="sticky rounded-full hover:bg-mauve-900 flex">
+                    <label
+                        for="my-drawer-4"
+                        aria-label="close sidebar"
+                        class="flex is-drawer-open:justify-end is-drawer-close:justify-center"
                     >
-                        <path
-                            fill-rule="evenodd"
-                            d="M18 10a.75.75 0 0 1-.75.75H4.66l2.1 1.95a.75.75 0 1 1-1.02 1.1l-3.5-3.25a.75.75 0 0 1 0-1.1l3.5-3.25a.75.75 0 1 1 1.02 1.1l-2.1 1.95h12.59A.75.75 0 0 1 18 10Z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                        class="size-8 is-drawer-close:visible is-drawer-open:hidden"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            d="M2 10a.75.75 0 0 1 .75-.75h12.59l-2.1-1.95a.75.75 0 1 1 1.02-1.1l3.5 3.25a.75.75 0 0 1 0 1.1l-3.5 3.25a.75.75 0 1 1-1.02-1.1l2.1-1.95H2.75A.75.75 0 0 1 2 10Z"
-                            clip-rule="evenodd"
-                        />
-                    </svg>
-                </label>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            class="size-8 is-drawer-close:visible is-drawer-open:visible"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                    </label>
+                </div>
                 <div
                     class="flex min-h-full flex-col items-start is-drawer-close:w-9 is-drawer-open:w-56"
                 >
