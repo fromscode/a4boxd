@@ -6,53 +6,31 @@
         <title>Home</title>
         <link rel="stylesheet" href="/output.css" />
     </head>
-    <body class="font-display tracking-tight font-extralight bg-mauve-950">
-        <nav class="navbar w-full">
-            <a href="/">
-                <div class="p-4 font-[Logo] text-4xl">a4boxd</div>
-            </a>
-        </nav>
-        <div class="drawer drawer-open">
-            <input
-                id="my-drawer-4"
-                type="checkbox"
-                class="drawer-toggle"
-                checked
-            />
-            <div class="drawer-content ml-3"><%- include('genre') %></div>
+    <body class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col h-screen overflow-hidden">
+        <%- include('navbar') %>
+        <main class="flex flex-1 h-full overflow-hidden">
+            <div class="min-w-72 bg-zinc-900 pl-5 py-5 overflow-hidden flex flex-col">
+                <div class="rounded-4xl w-fit h-fit p-2 mb-5 hover:bg-zinc-800 hover:cursor-pointer box-content">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                        <path fill-rule="evenodd" 
+                        d="M2 4.75A.75.75 0 0 1 2.75 4h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 4.75ZM2 10a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 10Zm0 5.25a.75.75 0 0 1 .75-.75h14.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"
+                        clip-rule="evenodd" />
+                    </svg>
+                </div>
+                                   
+                <%- include('genreList') %>
 
-            <div
-                class="drawer-side is-drawer-close:overflow-hidden is-drawer-open:w-52 bg-mauve-900"
-            >
-                <div class="sticky rounded-full hover:bg-mauve-900 flex">
-                    <label
-                        for="my-drawer-4"
-                        aria-label="close sidebar"
-                        class="flex is-drawer-open:justify-end is-drawer-close:justify-center"
-                    >
-                        <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 20 20"
-                            fill="currentColor"
-                            class="size-8 is-drawer-close:visible is-drawer-open:visible"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"
-                                clip-rule="evenodd"
-                            />
-                        </svg>
-                    </label>
-                </div>
-                <div
-                    class="flex min-h-full flex-col items-start is-drawer-close:w-9 is-drawer-open:w-56"
-                >
-                    <!-- Sidebar content here -->
-                    <ul class="menu w-full grow is-drawer-close:hidden">
-                        <%- include('genreList') %>
-                    </ul>
-                </div>
-            </div>
+                <div class="flex justify-start p-2">
+                    <button class="font-light rounded-full bg-zinc-800 w-fit p-3 pr-4 cursor-pointer hover:bg-zinc-700 flex gap-1 items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                          </svg>
+                           <span>
+                            Add a genre
+                           </span></div>
+                </div> 
+            </div> 
+            <div class="flex-1 mx-5"><%- include('genre') %></div>
         </div>
     </body>
 </html>
