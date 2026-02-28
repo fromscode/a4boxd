@@ -17,5 +17,5 @@ export default function (
         message: message,
     };
     console.error(err);
-    res.render("error", { err: renderData });
+    res.status(status).render("error", { err: renderData });
 }
