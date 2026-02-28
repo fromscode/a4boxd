@@ -10,7 +10,7 @@ async function getAllGenresSortedByMovies() {
     select genre.*, count(movie_genre.genre_id)
     from genre left join movie_genre on genre.id = movie_genre.genre_id
     group by genre.id
-    order by count desc;
+    order by count desc, id;
     `;
 
     const { rows } = await pool.query(query);
