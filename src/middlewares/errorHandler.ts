@@ -16,6 +16,6 @@ export default function (
         status: status,
         message: message,
     };
-    console.error(err);
+    if (status != 404) console.error(err);
     res.status(status).render("error", { err: renderData });
 }

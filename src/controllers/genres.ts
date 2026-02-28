@@ -1,30 +1,59 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import queries from "../db/queries.js";
 import genreCache from "../cache/GenreCache.js";
+import { matchedData, param, validationResult } from "express-validator";
+import NotFoundError from "../errors/NotFoundError.js";
 
-async function getGenre(req: Request, res: Response) {
-    const param = req.params.param as string;
-    if (param == "add") {
-        showGenreForm(req, res);
-        return;
-    }
+const validateGetRequest = param("param").custom((value) => {
+    if (!value) return false;
+    if (value == "add") return true;
+    const numericValue = +value;
+    if (
+        (!numericValue && numericValue != 0) ||
+        numericValue < 0 ||
+        numericValue > 2147483647
+    )
+        return false;
+    return true;
+});
 
-    const genreId = +param;
+const getGenre = [
+    validateGetRequest,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
 
-    const movies = await queries.getMoviesByGenreId(genreId);
+        console.log(matchedData(req));
+        const param = req.params.param as string;
+        if (param == "add") {
+            showGenreForm(req, res);
+            return;
+        }
 
-    if (genreCache.isEmpty()) {
-        await genreCache.fetchGenres();
-    }
+        const genreId = +param;
+        const genre = genreCache.getGenre(genreId);
 
-    const genre = genreCache.getGenre(genreId);
-    const renderData = {
-        genres: genreCache.genres,
-        genre: genre,
-        movies: movies,
-    };
-    res.render("index", renderData);
-}
+        if (!genre) {
+            next(NotFoundError);
+            return;
+        }
+
+        const movies = await queries.getMoviesByGenreId(genreId);
+
+        if (genreCache.isEmpty()) {
+            await genreCache.fetchGenres();
+        }
+        const renderData = {
+            genres: genreCache.genres,
+            genre: genre,
+            movies: movies,
+        };
+        res.render("index", renderData);
+    },
+];
 
 function showGenreForm(req: Request, res: Response) {
     res.render("addGenre");
