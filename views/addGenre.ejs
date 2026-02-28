@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add Genre</title>
+        <link rel="stylesheet" href="/output.css" />
+    </head>
+    <body class="bg-mauve-950 h-screen flex justify-center items-center">
+        <form
+            action="/add-genre"
+            method="post"
+            class="border border-mauve-300 p-8 flex flex-col gap-10"
+        >
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="genre" class="flex-1 text-right font-light"
+                        >Genre:
+                    </label>
+                    <input
+                        type="text"
+                        name="genre"
+                        id="genre"
+                        placeholder="Action"
+                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                        pattern="[0-9a-zA-Z]+([\-_]?[0-9a-zA-Z]+)*"
+                        maxlength="20"
+                        required
+                    />
+                </div>
+                <p
+                    class="font-light text-red-600 text-center mt-2 hidden"
+                    id="value-missing"
+                >
+                    Genre cannot be empty
+                </p>
+                <p
+                    class="font-light text-red-600 text-center mt-2 hidden"
+                    id="value-mismatch"
+                >
+                    Genre cannot contain any special characters except - and _
+                    <br />
+                    Genre cannot start or end with - or _
+                </p>
+            </fieldset>
+
+            <div class="flex gap-5">
+                <label for="added-by" class="flex-1 text-right font-light"
+                    >Username:
+                </label>
+                <input
+                    type="text"
+                    name="added-by"
+                    id="added-by"
+                    placeholder="fromscode"
+                    maxlength="30"
+                    class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
+                />
+            </div>
+
+            <div class="flex justify-center">
+                <button
+                    type="submit"
+                    class="border-2 py-1 px-5 border-mauve-600 rounded-full cursor-pointer hover:bg-mauve-100 hover:text-mauve-950 hover:border-mauve-100"
+                >
+                    Add
+                </button>
+            </div>
+        </form>
+
+        <script>
+            const genre = document.getElementById("genre");
+            const button = document.querySelector("button");
+            const empty = document.getElementById("value-missing");
+            const mismatch = document.getElementById("value-mismatch");
+
+            genre.addEventListener("input", () => {
+                if (genre.validity.valid) {
+                    genre.classList.remove("border-red-700");
+                    empty.classList.add("hidden");
+                    mismatch.classList.add("hidden");
+                } else {
+                    if (!genre.validity.valueMissing) {
+                        empty.classList.add("hidden");
+                    }
+                    if (!genre.validity.patternMismatch) {
+                        mismatch.classList.add("hidden");
+                    }
+                    if (!genre.validity.tooLong) {
+                    }
+                }
+            });
+
+            genre.addEventListener("change", () => {
+                if (genre.validity.valid) {
+                    genre.classList.remove("border-red-700");
+                    empty.classList.add("hidden");
+                    mismatch.classList.add("hidden");
+                } else if (genre.validity.valueMissing) {
+                    genre.classList.add("border-red-700");
+                    empty.classList.remove("hidden");
+                } else if (genre.validity.patternMismatch) {
+                    genre.classList.add("border-red-700");
+                    mismatch.classList.remove("hidden");
+                } else if (genre.validity.tooLong) {
+                    genre.classList.add("border-red-700");
+                }
+            });
+
+            const form = document.querySelector("form");
+            button.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (genre.validity.valueMissing) {
+                    genre.classList.add("border-red-700");
+                    empty.classList.remove("hidden");
+                } else if (genre.validity.patternMismatch) {
+                    genre.classList.add("border-red-700");
+                    mismatch.classList.remove("hidden");
+                } else if (genre.validity.tooLong) {
+                    genre.classList.add("border-red-700");
+                } else {
+                    form.submit();
+                }
+            });
+        </script>
+    </body>
+</html>

@@ -21,13 +21,16 @@
                 <%- include('genreList') %>
 
                 <div class="flex justify-start p-2" id="add-genre-btn">
-                    <button class="font-light rounded-full bg-zinc-800 w-fit p-3 pr-4 cursor-pointer hover:bg-zinc-700 flex gap-1 items-center">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                            <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
-                          </svg>
-                           <span>
-                            Add a genre
-                           </span></div>
+                    <a href="add">
+                        <button class="font-light rounded-full bg-zinc-800 w-fit p-3 pr-4 cursor-pointer hover:bg-zinc-700 flex gap-1 items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                                <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z" />
+                            </svg>
+                            <span>
+                                Add a genre
+                            </span>
+                        </button>
+                    </a>
                 </div> 
             </div> 
             <div class="flex-1 mx-5"><%- include('genre') %></div>
