@@ -1,5 +1,6 @@
 import type { Request, Response } from "express";
 import queries from "../db/queries.js";
+import genreCache from "../cache/GenreCache.js";
 
 async function getGenre(req: Request, res: Response) {
     const param = req.params.param as string;
@@ -11,8 +12,14 @@ async function getGenre(req: Request, res: Response) {
     const genreId = +param;
 
     const movies = await queries.getMoviesByGenreId(genreId);
-    const genre = res.locals.genres.find((genre: any) => genre.id === genreId);
+
+    if (genreCache.isEmpty()) {
+        await genreCache.fetchGenres();
+    }
+
+    const genre = genreCache.getGenre(genreId);
     const renderData = {
+        genres: genreCache.genres,
         genre: genre,
         movies: movies,
     };
