@@ -12,5 +12,9 @@ export default function (
 ) {
     const status = err.status || 500;
     const message = err.status == 500 ? "Internal Server Error" : err.message;
-    res.status(status).send(message);
+    const renderData = {
+        status: status,
+        message: message,
+    };
+    res.render("error", { err: renderData });
 }
