@@ -7,16 +7,16 @@ CREATE TABLE IF NOT EXISTS movie (
     year INTEGER,
     director VARCHAR(50),
     description TEXT,
-    added_by VARCHAR(50),
+    added_by VARCHAR(30),
     added_at TIMESTAMPTZ,
-    updated_by VARCHAR(50),
+    updated_by VARCHAR(30),
     updated_at TIMESTAMPTZ
 );
 
 CREATE TABLE IF NOT EXISTS genre (
     id INTEGER PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
-    genre VARCHAR(50),
-    added_by VARCHAR(50) DEFAULT 'fromscode'
+    genre VARCHAR(20),
+    added_by VARCHAR(30) DEFAULT 'fromscode'
 );
 
 CREATE TABLE IF NOT EXISTS movie_genre (
