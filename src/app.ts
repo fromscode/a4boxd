@@ -10,6 +10,8 @@ import genreCache from "./middlewares/cachedGenres.js";
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+
 app.set("view engine", "ejs");
 app.set("views", path.join(import.meta.dirname, "..", "views"));
 
