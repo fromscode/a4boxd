@@ -11,7 +11,7 @@ export default function (
     next: NextFunction,
 ) {
     const status = err.status || 500;
-    const message = err.status == 500 ? "Internal Server Error" : err.message;
+    const message = status == 500 ? "Internal Server Error" : err.message;
     const renderData = {
         status: status,
         message: message,
