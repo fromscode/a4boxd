@@ -10,12 +10,6 @@ export default function (
     res: Response,
     next: NextFunction,
 ) {
-    const status = err.status || 500;
-    const message = status == 500 ? "Internal Server Error" : err.message;
-    const renderData = {
-        status: status,
-        message: message,
-    };
-    if (status != 404) console.error(err);
-    res.status(status).render("error", { err: renderData });
+    if (!err.status) console.error(err);
+    res.status(err.status || 500).render("error", { err: err });
 }

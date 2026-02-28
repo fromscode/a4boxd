@@ -1,8 +1,9 @@
 import type { NextFunction, Request, Response } from "express";
 import queries from "../db/queries.js";
 import genreCache from "../cache/GenreCache.js";
-import { matchedData, param, validationResult } from "express-validator";
+import { body, matchedData, param, validationResult } from "express-validator";
 import NotFoundError from "../errors/NotFoundError.js";
+import FormError from "../errors/FormError.js";
 
 const validateGetRequest = param("param").custom((value) => {
     if (!value) return false;
@@ -59,14 +60,43 @@ function showGenreForm(req: Request, res: Response) {
     res.render("addGenre");
 }
 
-async function addGenre(req: Request, res: Response) {
-    const genre = req.body["genre"];
-    const addedBy = req.body["added-by"] || "Anonymous";
+const validateForm = [
+    body("genre")
+        .escape()
+        .notEmpty()
+        .withMessage("Genre cannot be empty")
+        .matches(/^[0-9a-zA-Z]+([\-_]?[0-9a-zA-Z]+)*$/mv)
+        .withMessage(
+            `Genre cannot contain any special characters except - and _.
+    Genre cannot start or end with - or _`,
+        )
+        .isLength({ max: 20 })
+        .withMessage("Genre must be less than 20 characters"),
 
-    await queries.insertGenre(genre, addedBy);
-    await genreCache.fetchGenres();
-    res.redirect("/");
-}
+    body("added-by")
+        .escape()
+        .isLength({ max: 30 })
+        .withMessage("Username must be less than 30 characters"),
+];
+
+const addGenre = [
+    validateForm,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            FormError.errors = result.array();
+            next(FormError);
+            return;
+        }
+        const body = matchedData(req);
+        const genre = body["genre"];
+        const addedBy = body["added-by"] || "Anonymous";
+
+        await queries.insertGenre(genre, addedBy);
+        await genreCache.fetchGenres();
+        res.redirect("/");
+    },
+];
 
 export default {
     getGenre,

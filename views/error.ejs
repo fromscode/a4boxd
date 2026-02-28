@@ -9,8 +9,15 @@
     <body
         class="flex bg-mauve-950 font-display tracking-tight font-extralight items-center justify-center h-screen gap-1"
     >
-        <div class="font-bold text-3xl"><%= err.status %></div>
+        <div class="font-bold text-3xl"><%= err.status || 500 %></div>
         <span class="font-thin text-6xl">|</span>
-        <div class=""><%= err.message %></div>
+        <div class=""><%= err.status ? err.message : "Internal Server Error" %></div>
+        <% if (err.errors && err.errors.length) { %>
+            <ul>
+                <% err.errors.forEach(error => { %>
+                    <li><%= error.msg %></li>        
+                <% }); %>
+            </ul>
+        <% } %>
     </body>
 </html>
