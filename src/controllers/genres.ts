@@ -30,9 +30,13 @@ function showGenreForm(req: Request, res: Response) {
     res.render("addGenre");
 }
 
-function addGenre(req: Request, res: Response) {
-    console.log(req.body);
-    res.render("addGenre");
+async function addGenre(req: Request, res: Response) {
+    const genre = req.body["genre"];
+    const addedBy = req.body["added-by"] || "Anonymous";
+
+    await queries.insertGenre(genre, addedBy);
+    await genreCache.fetchGenres();
+    res.redirect("/");
 }
 
 export default {

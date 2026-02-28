@@ -28,8 +28,16 @@ async function getMoviesByGenreId(genreId: number) {
     return rows;
 }
 
+async function insertGenre(genre: string, addedBy: string) {
+    await pool.query("insert into genre (genre, added_by) values ($1, $2)", [
+        genre,
+        addedBy,
+    ]);
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
     getMoviesByGenreId,
+    insertGenre,
 };
