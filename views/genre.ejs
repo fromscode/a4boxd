@@ -1,4 +1,4 @@
-<section>
+<section class="flex flex-col h-full">
     <div class="mb-5">
         <div class="flex">
             <h1 class="text-8xl font-normal "><%= genre.genre %></h1>
@@ -23,10 +23,10 @@
         </div>
     </div>
     
-    <div class="flex flex-wrap gap-6">
+    <div class="flex-1 min-h-0 content-start flex flex-wrap gap-6 overflow-y-auto pb-10">
         <% movies.forEach(movie => { %>
     
-            <div class="bg-mauve-900 p-4 rounded-2xl min-w-sm">
+            <div class="bg-mauve-900 p-4 rounded-2xl w-sm h-36">
                 <div class="flex gap-4">
                     <div class="text-3xl font-medium">
                         <%= movie.title %>

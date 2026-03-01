@@ -9,7 +9,7 @@
     <body class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col h-screen overflow-hidden">
         <%- include('navbar') %>
         <main class="flex flex-1 h-full overflow-hidden">
-            <div class="bg-zinc-900 pl-5 py-5 overflow-hidden flex flex-col transition-all duration-300 ease-in-out w-72" id="sidebar">
+            <div class="bg-zinc-900 pl-5 py-5 overflow-hidden flex flex-col transition-all duration-300 ease-in-out min-w-72" id="sidebar">
                 <div class="rounded-4xl w-fit h-fit p-2 mb-5 hover:bg-zinc-800 hover:cursor-pointer box-content" id="collapse-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                         <path fill-rule="evenodd" 
@@ -47,8 +47,8 @@
             btn.addEventListener('click', () => {
                 genreList.classList.toggle(hidden);
                 addGenreBtn.classList.toggle(hidden);
-                sidebar.classList.toggle("w-72");
-                sidebar.classList.toggle("w-20");
+                sidebar.classList.toggle("min-w-72");
+                sidebar.classList.toggle("min-w-20");
             })
         </script>
     </body>

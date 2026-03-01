@@ -2,7 +2,7 @@
   <% genres.forEach(element => { %>
       <a href="<%= "/genres/" + element.id %>">
         <% if (element.id === genre.id) {%>
-          <li class="flex bg-mauve-800 px-3 py-1 mb-2 text-lg rounded-full">
+          <li class="flex bg-mauve-800 px-3 py-1 mb-2 text-lg rounded-full" id="current">
             <span class=""><%= element.genre %></span>
             <span class="ml-auto min-w-10 rounded-full bg-mauve-800 text-center"><%= element.count %></span>
           </li>
@@ -14,4 +14,9 @@
           <% } %>
       </a>
   <% }); %>
+
+  <script type="module">
+    const current = document.getElementById('current');
+    current.scrollIntoView({container: 'nearest', behavior: "smooth", block: "center"});
+  </script>
 </ul>
