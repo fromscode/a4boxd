@@ -1,9 +1,15 @@
 import type { NextFunction, Request, Response } from "express";
 import queries from "../db/queries.js";
 import genreCache from "../cache/GenreCache.js";
-import { body, matchedData, param, validationResult } from "express-validator";
+import {
+    body,
+    matchedData,
+    param,
+    validationResult,
+    type FieldValidationError,
+} from "express-validator";
 import NotFoundError from "../errors/NotFoundError.js";
-import FormError from "../errors/FormError.js";
+import BadRequest from "../errors/BadRequest.js";
 
 const validateGetRequest = param("param").custom((value) => {
     if (!value) return false;
@@ -27,8 +33,6 @@ const getGenre = [
             return;
         }
 
-        console.log(matchedData(req));
-        console.log("called");
         const param = req.params.param as string;
         if (param == "add") {
             showGenreForm(req, res);
@@ -85,8 +89,8 @@ const addGenre = [
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            FormError.errors = result.array();
-            next(FormError);
+            BadRequest.errors = result.array();
+            next(BadRequest);
             return;
         }
         const body = matchedData(req);
@@ -100,7 +104,17 @@ const addGenre = [
 ];
 
 const confirmDelete = [
+    param("genreId").escape().isInt({ min: 0, max: 2147483647 }),
+    body("password").escape().notEmpty(),
     async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            const firstError = result.array()[0];
+            if ((firstError as FieldValidationError).location == "params")
+                next(NotFoundError);
+            else next(BadRequest);
+            return;
+        }
         const genreId = +(req.params.genreId as string);
         const password = req.body.password;
         if (password === process.env.admin_pass) {

@@ -1,6 +1,6 @@
 import type { ValidationError } from "express-validator";
 
-class FormError extends Error {
+class BadRequest extends Error {
     status = 400;
     errors: ValidationError[] = [];
     constructor() {
@@ -8,4 +8,4 @@ class FormError extends Error {
     }
 }
 
-export default new FormError();
+export default new BadRequest();
