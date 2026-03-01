@@ -102,9 +102,25 @@ const addGenre = [
 const confirmDelete = [
     async (req: Request, res: Response, next: NextFunction) => {
         const genreId = +(req.params.genreId as string);
-        await queries.deleteGenre(genreId);
-        genreCache.fetchGenres();
-        res.redirect("/");
+        const password = req.body.password;
+        if (password === process.env.admin_pass) {
+            await queries.deleteGenre(genreId);
+            genreCache.fetchGenres();
+            res.redirect("/");
+            return;
+        }
+
+        res.render("confirm_delete_genre", {
+            id: genreId,
+            msg: "Password is incorrect",
+        });
+    },
+];
+
+const deleteGenre = [
+    async (req: Request, res: Response) => {
+        const genreId = +(req.params.genreId as string);
+        res.render("confirm_delete_genre", { id: genreId, msg: null });
     },
 ];
 
@@ -112,4 +128,5 @@ export default {
     getGenre,
     addGenre,
     confirmDelete,
+    deleteGenre,
 };

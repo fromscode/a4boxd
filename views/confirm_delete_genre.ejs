@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>a4boxd</title>
+        <link rel="stylesheet" href="/output.css" />
+    </head>
+    <body>
+        <body class="bg-mauve-950 h-screen flex justify-center items-center">
+            <form
+                action="<%= "/genres/confirm-delete/" + id %>"
+                method="post"
+                class="border border-mauve-300 p-8 flex flex-col gap-10"
+            >
+                <div class="flex gap-5">
+                    <label
+                        for="password"
+                        class="flex-1 text-right font-light"
+                        >Admin Password:
+                    </label>
+                    <input
+                        type="password"
+                        name="password"
+                        id="password"
+                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                    />
+                </div>
+                <% if (msg) { %>
+                    <p
+                    class="font-light text-red-600 text-center mt-2"
+                    id="value-missing"
+                >
+                    <%= msg %>
+                </p>
+                <% } %>
+                <div class="flex justify-center">
+                    <button
+                        type="submit"
+                        class="text-red-500 self-center rounded-full p-2 hover:bg-red-600 hover:text-mauve-950 font-normal cursor-pointer"
+                    >
+                        Delete
+                    </button>
+                </div>
+            </form>
+
+        </body>
+    </body>
+</html>
