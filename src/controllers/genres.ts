@@ -118,7 +118,13 @@ const confirmDelete = [
 ];
 
 const deleteGenre = [
-    async (req: Request, res: Response) => {
+    param("genreId").escape().isInt({ min: 0, max: 2147483647 }),
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
         const genreId = +(req.params.genreId as string);
         res.render("confirm_delete_genre", { id: genreId, msg: null });
     },
