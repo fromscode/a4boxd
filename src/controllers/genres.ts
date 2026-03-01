@@ -80,7 +80,7 @@ const validateForm = [
 ];
 
 const addGenre = [
-    validateForm,
+    ...validateForm,
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
