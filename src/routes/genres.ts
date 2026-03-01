@@ -8,4 +8,6 @@ router.get("/:param", genreRouter.getGenre);
 
 router.post("/add", genreRouter.addGenre);
 
+router.post("/confirm-delete/:genreId", genreRouter.confirmDelete);
+
 export default router;

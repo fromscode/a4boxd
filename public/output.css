@@ -7,17 +7,15 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-400: oklch(70.4% 0.191 22.216);
     --color-red-500: oklch(63.7% 0.237 25.331);
     --color-red-600: oklch(57.7% 0.245 27.325);
     --color-red-700: oklch(50.5% 0.213 27.518);
-    --color-red-800: oklch(44.4% 0.177 26.899);
-    --color-red-900: oklch(39.6% 0.141 25.723);
     --color-zinc-700: oklch(37% 0.013 285.805);
     --color-zinc-800: oklch(27.4% 0.006 286.033);
     --color-zinc-900: oklch(21% 0.006 285.885);
     --color-mauve-100: oklch(96% 0.003 325.6);
     --color-mauve-300: oklch(86.5% 0.012 325.68);
-    --color-mauve-400: oklch(71.1% 0.019 323.02);
     --color-mauve-500: oklch(54.2% 0.034 322.5);
     --color-mauve-600: oklch(43.5% 0.029 321.78);
     --color-mauve-800: oklch(26.3% 0.024 320.12);
@@ -26,10 +24,6 @@
     --color-black: #000;
     --spacing: 0.25rem;
     --container-sm: 24rem;
-    --container-md: 28rem;
-    --container-lg: 32rem;
-    --container-xl: 36rem;
-    --container-3xl: 48rem;
     --text-lg: 1.125rem;
     --text-lg--line-height: calc(1.75 / 1.125);
     --text-xl: 1.25rem;
@@ -50,9 +44,7 @@
     --font-weight-bold: 700;
     --tracking-tighter: -0.05em;
     --tracking-tight: -0.025em;
-    --radius-sm: 0.25rem;
     --radius-md: 0.375rem;
-    --radius-xl: 0.75rem;
     --radius-2xl: 1rem;
     --radius-4xl: 2rem;
     --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1691,6 +1683,9 @@
   .gap-1 {
     gap: calc(var(--spacing) * 1);
   }
+  .gap-2 {
+    gap: calc(var(--spacing) * 2);
+  }
   .gap-4 {
     gap: calc(var(--spacing) * 4);
   }
@@ -1702,6 +1697,9 @@
   }
   .gap-10 {
     gap: calc(var(--spacing) * 10);
+  }
+  .self-center {
+    align-self: center;
   }
   .self-end {
     align-self: flex-end;
@@ -1866,6 +1864,9 @@
   .text-wrap {
     text-wrap: wrap;
   }
+  .text-red-500 {
+    color: var(--color-red-500);
+  }
   .text-red-600 {
     color: var(--color-red-600);
   }
@@ -1927,6 +1928,27 @@
       }
     }
   }
+  .hover\:bg-mauve-500 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-mauve-500);
+      }
+    }
+  }
+  .hover\:bg-red-400 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-red-400);
+      }
+    }
+  }
+  .hover\:bg-red-500 {
+    &:hover {
+      @media (hover: hover) {
+        background-color: var(--color-red-500);
+      }
+    }
+  }
   .hover\:bg-zinc-700 {
     &:hover {
       @media (hover: hover) {
@@ -1949,11 +1971,40 @@
       }
     }
   }
+  .hover\:text-mauve-300 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-mauve-300);
+      }
+    }
+  }
+  .hover\:text-mauve-600 {
+    &:hover {
+      @media (hover: hover) {
+        color: var(--color-mauve-600);
+      }
+    }
+  }
   .hover\:text-mauve-950 {
     &:hover {
       @media (hover: hover) {
         color: var(--color-mauve-950);
       }
+    }
+  }
+  .sm\:visible {
+    @media (width >= 40rem) {
+      visibility: visible;
+    }
+  }
+  .sm\:block {
+    @media (width >= 40rem) {
+      display: block;
+    }
+  }
+  .sm\:hidden {
+    @media (width >= 40rem) {
+      display: none;
     }
   }
 }

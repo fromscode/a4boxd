@@ -28,6 +28,7 @@ const getGenre = [
         }
 
         console.log(matchedData(req));
+        console.log("called");
         const param = req.params.param as string;
         if (param == "add") {
             showGenreForm(req, res);
@@ -98,7 +99,17 @@ const addGenre = [
     },
 ];
 
+const confirmDelete = [
+    async (req: Request, res: Response, next: NextFunction) => {
+        const genreId = +(req.params.genreId as string);
+        await queries.deleteGenre(genreId);
+        genreCache.fetchGenres();
+        res.redirect("/");
+    },
+];
+
 export default {
     getGenre,
     addGenre,
+    confirmDelete,
 };

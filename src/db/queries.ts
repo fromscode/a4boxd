@@ -35,9 +35,14 @@ async function insertGenre(genre: string, addedBy: string) {
     ]);
 }
 
+async function deleteGenre(genreId: number) {
+    await pool.query("delete from genre where id = $1", [genreId]);
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
     getMoviesByGenreId,
     insertGenre,
+    deleteGenre,
 };
