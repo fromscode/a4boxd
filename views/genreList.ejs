@@ -1,4 +1,4 @@
-<ul class="font-light overflow-x-hidden" style="scrollbar-color: var(--color-zinc-900) var(--color-zinc-900);">
+<ul class="font-light overflow-x-hidden lg:block hidden" style="scrollbar-color: var(--color-zinc-900) var(--color-zinc-900);">
   <% genres.forEach((element, index) => { %>
       <a href="<%= "/genres/" + element.id %>" id="<%= index %>">
         <% if (element.id === genre.id) {%>

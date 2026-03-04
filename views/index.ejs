@@ -9,7 +9,7 @@
     <body class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col h-screen overflow-hidden">
         <%- include('navbar') %>
         <main class="flex flex-1 h-full overflow-hidden">
-            <div class="bg-zinc-900 pl-5 py-5 overflow-hidden flex flex-col transition-all duration-300 ease-in-out min-w-72" id="sidebar">
+            <div class="bg-zinc-900 pl-5 py-5 overflow-hidden flex flex-col transition-all duration-300 ease-in-out lg:min-w-72 min-w-20" id="sidebar">
                 <div class="rounded-4xl w-fit h-fit p-2 mb-5 hover:bg-zinc-800 hover:cursor-pointer box-content" id="collapse-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
                         <path fill-rule="evenodd" 
@@ -20,7 +20,7 @@
                                    
                 <%- include('genreList') %>
 
-                <div class="flex justify-start p-2" id="add-genre-btn">
+                <div class="justify-start p-2 lg:flex hidden" id="add-genre-btn">
                     <a href="/genres/add">
                         <button class="font-light rounded-full bg-zinc-800 w-fit p-3 pr-4 cursor-pointer hover:bg-zinc-700 flex gap-1 items-center">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
@@ -36,27 +36,55 @@
             <div class="flex-1 mx-5"><%- include('genre') %></div>
         </div>
 
+        <div class="absolute bottom-10 right-10 rounded-full bg-mauve-800 p-3 border-2 border-mauve-600 cursor-pointer
+        hover:bg-mauve-100 hover:text-black flex gap-2 font-light" id="<%= genre.id %>">
+            <span>Add a movie</span>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>              
+        </div>
+
         <script>
             const btn = document.getElementById('collapse-btn');
             const sidebar = document.getElementById('sidebar');
             const genreList = document.querySelector('ul');
             const addGenreBtn = document.getElementById('add-genre-btn')
 
-            const hidden = 'hidden'; 
-            let isHidden = false;
+            let isScreenLarge = visualViewport.width >= 1024;
+            let isHidden = !isScreenLarge;
 
             btn.addEventListener('click', () => {
-                if (isHidden) {
-                    setTimeout(() => genreList.classList.toggle(hidden), 100);
-                    setTimeout(() => addGenreBtn.classList.toggle(hidden), 100);
+                if (isScreenLarge) {
+                    if (isHidden) {
+                        setTimeout(() => genreList.classList.toggle('lg:hidden'), 100);
+                        setTimeout(() => addGenreBtn.classList.toggle("lg:hidden"), 100);
+                    }
+                    else {
+                        genreList.classList.toggle("lg:hidden");
+                        addGenreBtn.classList.toggle("lg:hidden");
+                    }
+
+                    sidebar.classList.toggle("lg:min-w-72");
+                    sidebar.classList.toggle("lg:min-w-20");
                 }
                 else {
-                    genreList.classList.toggle(hidden);
-                    addGenreBtn.classList.toggle(hidden);
-                }   
-                sidebar.classList.toggle("min-w-72");
-                sidebar.classList.toggle("min-w-20");
+                    if (isHidden) {
+                        setTimeout(() => genreList.classList.toggle("hidden"), 100);
+                        setTimeout(() => addGenreBtn.classList.toggle("hidden"), 100);
+                    }
+                    else {
+                        genreList.classList.toggle("hidden");
+                        addGenreBtn.classList.toggle("hidden");
+                    }
+                    sidebar.classList.toggle("min-w-72");
+                    sidebar.classList.toggle("min-w-20");
+                }
                 isHidden = !isHidden;
+            })
+
+            addEventListener('resize', () => {
+                isScreenLarge = visualViewport.width >= 1024;
+                isHidden = !isScreenLarge;
             })
         </script>
     </body>
