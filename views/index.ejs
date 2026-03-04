@@ -42,13 +42,21 @@
             const genreList = document.querySelector('ul');
             const addGenreBtn = document.getElementById('add-genre-btn')
 
-            const hidden = 'hidden';  
+            const hidden = 'hidden'; 
+            let isHidden = false;
 
             btn.addEventListener('click', () => {
-                genreList.classList.toggle(hidden);
-                addGenreBtn.classList.toggle(hidden);
+                if (isHidden) {
+                    setTimeout(() => genreList.classList.toggle(hidden), 100);
+                    setTimeout(() => addGenreBtn.classList.toggle(hidden), 100);
+                }
+                else {
+                    genreList.classList.toggle(hidden);
+                    addGenreBtn.classList.toggle(hidden);
+                }   
                 sidebar.classList.toggle("min-w-72");
                 sidebar.classList.toggle("min-w-20");
+                isHidden = !isHidden;
             })
         </script>
     </body>
