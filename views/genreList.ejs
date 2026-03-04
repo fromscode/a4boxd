@@ -1,6 +1,6 @@
-<ul class="font-light overflow-x-hidden" style="scrollbar-color: var(--color-zinc-700) var(--color-zinc-900);">
-  <% genres.forEach(element => { %>
-      <a href="<%= "/genres/" + element.id %>">
+<ul class="font-light overflow-x-hidden" style="scrollbar-color: var(--color-zinc-900) var(--color-zinc-900);">
+  <% genres.forEach((element, index) => { %>
+      <a href="<%= "/genres/" + element.id %>" id="<%= index %>">
         <% if (element.id === genre.id) {%>
           <li class="flex bg-mauve-800 px-3 py-1 mb-2 text-lg rounded-full" id="current">
             <span class=""><%= element.genre %></span>
@@ -17,6 +17,18 @@
 
   <script type="module">
     const current = document.getElementById('current');
-    current.scrollIntoView({container: 'nearest', behavior: "smooth", block: "center"});
+    const ul = document.querySelector('ul');
+    const currentId = +current.parentElement.id;
+    let scrollBy = (currentId - 5) * current.offsetHeight;
+    ul.scroll(0, scrollBy);
+
+    const allGenresList = document.querySelectorAll('ul a');
+    ul.addEventListener('mouseenter', e => {
+      ul.style['scrollbar-color'] = 'var(--color-zinc-700) var(--color-zinc-900)';
+    })
+
+    ul.addEventListener('mouseleave', e => {
+      ul.style['scrollbar-color'] = 'var(--color-zinc-900) var(--color-zinc-900)';
+    })
   </script>
 </ul>
