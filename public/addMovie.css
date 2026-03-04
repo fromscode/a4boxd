@@ -1,0 +1,31 @@
+select, 
+::picker(select) {
+    appearance: base-select;
+}
+
+::picker(select) {
+    scrollbar-color: var(--color-zinc-700) var(--color-zinc-900);
+    border: none;
+    background-color: var(--color-zinc-900);
+    position:relative;
+    bottom: 5rem;
+}
+
+option:checked {
+    background-color: var(--color-mauve-800);
+    color: var(--color-mauve-100)
+}
+
+option::checkmark {
+    order: 1;
+    margin-left: auto;
+}
+
+select::picker-icon {
+    color: var(--color-mauve-600);
+    transition: 0.5s rotate;
+}
+
+select:open::picker-icon {
+    rotate: 180deg;
+}

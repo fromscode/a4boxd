@@ -36,13 +36,15 @@
             <div class="flex-1 mx-5"><%- include('genre') %></div>
         </div>
 
-        <div class="absolute bottom-10 right-10 rounded-full bg-mauve-800 p-3 border-2 border-mauve-600 cursor-pointer
-        hover:bg-mauve-100 hover:text-black flex gap-2 font-light" id="<%= genre.id %>">
-            <span>Add a movie</span>
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-              </svg>              
-        </div>
+        <a href="/movies/addMovie/">
+            <div class="absolute bottom-10 right-10 rounded-full bg-mauve-800 p-3 border-2 border-mauve-600 cursor-pointer
+            hover:bg-mauve-100 hover:text-black flex gap-2 font-light" id="<%= genre.id %>">
+                <span>Add a movie</span>
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>              
+            </div>
+        </a>
 
         <script>
             const btn = document.getElementById('collapse-btn');

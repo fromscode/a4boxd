@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Add title</title>
+        <link rel="stylesheet" href="/output.css" />
+        <link rel="stylesheet" href="/addMovie.css" />
+    </head>
+    <body class="bg-mauve-950 h-screen flex justify-center items-center">
+        <form
+            action="confirm"
+            method="post"
+            class="border border-mauve-300 p-8 flex flex-col gap-10"
+        >
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="title" class="flex-1 text-right font-light"
+                        >Title:
+                    </label>
+                    <input
+                        type="text"
+                        name="title"
+                        id="title"
+                        placeholder="Seven Samurai"
+                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                        pattern="[\w *\-]+"
+                        maxlength="200"
+                        required
+                    />
+                </div>
+                <div id="title-errors">
+                    <p
+                        class="font-light text-red-600 text-center mt-2 hidden"
+                        id="value-missing"
+                    >
+                        Title cannot be empty
+                    </p>
+                    <p
+                        class="font-light text-red-600 text-center mt-2 hidden"
+                        id="value-mismatch"
+                    >
+                        Title cannot contain any special characters
+                    </p>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="year" class="flex-1 text-right font-light max-w-sm"
+                        >Year:
+                    </label>
+                    <select
+                        name="year"
+                        id="year"
+                        class="border border-mauve-500 p-2 pl-2 flex-3
+                        rounded-md font-light outline-0 cursor-pointer
+                        "
+                    >
+                        <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
+                            <option value="<%= i %>"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                pl-2 pr-5"
+                                ><%= i %></option>
+                        <% }%>
+                        <option value="1900" 
+                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                        pl-2 pr-5">Before 1940</option>
+                    </select>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="director" class="flex-1 text-right font-light"
+                        >Director:
+                    </label>
+                    <input
+                        type="text"
+                        name="director"
+                        id="director"
+                        placeholder="Akira Kurosawa"
+                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                        pattern="[a-zA-Z]+[a-zA-Z. ]*"
+                        minlength="3"
+                        maxlength="30"
+                        required
+                    />
+                </div>
+                <div id="title-errors">
+                    <p
+                        class="font-light text-red-600 text-center mt-2 hidden"
+                        id="director-underflow"
+                    >
+                        Director's name must be at least 3 characters
+                    </p>
+                    <p
+                        class="font-light text-red-600 text-center mt-2 hidden"
+                        id="director-mismatch"
+                    >
+                    Director's name cannot contain any special characters
+                    </p>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="desc" class="flex-1 text-right font-light"
+                        >Description:
+                    </label>
+                    <textarea
+                        type="text"
+                        name="desc"
+                        id="desc"
+                        class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
+                        font-light outline-0 w-sm resize-none text-mauve-200"
+                        placeholder="Seven Samurais. One Village. Total Action."
+                        required
+                    ></textarea>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="genre" class="flex-1 text-right font-light max-w-sm"
+                        >Genre:
+                    </label>
+                    <select
+                        name="genre"
+                        id="genre"
+                        class="border border-mauve-500 p-2 pl-2 flex-3
+                        rounded-md font-light outline-0 cursor-pointer
+                        "
+                    >
+                        <% for (const gen of genres) { %>
+                            <option value="<%= gen.id %>"
+                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                            pl-2 pr-5"
+                            ><%= gen.genre %></option>
+                        <% }%>
+                    </select>
+                </div>
+            </fieldset>
+            
+            <fieldset>
+                <div class="flex gap-5">
+                    <label for="added-by" class="flex-1 text-right font-light"
+                        >Username:
+                    </label>
+                    <input
+                        type="text"
+                        name="added-by"
+                        id="added-by"
+                        placeholder="fromscode"
+                        maxlength="30"
+                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
+                    />
+                </div>
+            </fieldset>
+
+            <div class="flex justify-center">
+                <button
+                    type="submit"
+                    class="border-2 py-1 px-5 border-mauve-600 rounded-full cursor-pointer hover:bg-mauve-100 hover:text-mauve-950 hover:border-mauve-100"
+                >
+                    Add
+                </button>
+            </div>
+        </form>
+
+        <script>
+            const tile = document.getElementById("title");
+            const button = document.querySelector("button");
+            const empty = document.getElementById("value-missing");
+            const mismatch = document.getElementById("value-mismatch");
+
+            title.addEventListener("input", () => {
+                if (title.validity.valid) {
+                    title.classList.remove("border-red-700");
+                    empty.classList.add("hidden");
+                    mismatch.classList.add("hidden");
+                } else {
+                    if (!title.validity.valueMissing) {
+                        empty.classList.add("hidden");
+                    }
+                    if (!title.validity.patternMismatch) {
+                        mismatch.classList.add("hidden");
+                    }
+                }
+            });
+
+            title.addEventListener("change", () => {
+                if (title.validity.valid) {
+                    title.classList.remove("border-red-700");
+                    empty.classList.add("hidden");
+                    mismatch.classList.add("hidden");
+                } else if (title.validity.valueMissing) {
+                    title.classList.add("border-red-700");
+                    empty.classList.remove("hidden");
+                } else if (title.validity.patternMismatch) {
+                    title.classList.add("border-red-700");
+                    mismatch.classList.remove("hidden");
+                }
+            });
+
+            const director = document.getElementById("director");
+            const directorUnderflow = document.getElementById("director-underflow");
+            const directorMismatch = document.getElementById("director-mismatch");
+
+            director.addEventListener("input", () => {
+                if (director.validity.valid) {
+                    director.classList.remove("border-red-700");
+                    directorUnderflow.classList.add("hidden");
+                    directorMismatch.classList.add("hidden");
+                } else {
+                    if (!director.validity.tooShort || !director.validity.valueMissing) {
+                        directorUnderflow.classList.add("hidden");
+                    }
+                    if (!director.validity.patternMismatch) {
+                        directorMismatch.classList.add("hidden");
+                    }
+                }
+            });
+
+            director.addEventListener("change", () => {
+                if (director.validity.valid) {
+                    director.classList.remove("border-red-700");
+                    directorUnderflow.classList.add("hidden");
+                    directorMismatch.classList.add("hidden");
+                } else if (director.validity.tooShort || director.validity.valueMissing) {
+                    director.classList.add("border-red-700");
+                    directorUnderflow.classList.remove("hidden");
+                } else if (director.validity.patternMismatch) {
+                    director.classList.add("border-red-700");
+                    directorMismatch.classList.remove("hidden");
+                } 
+            });
+
+            const form = document.querySelector("form");
+            button.addEventListener("click", (e) => {
+                e.preventDefault();
+                if (title.validity.valueMissing) {
+                    title.classList.add("border-red-700");
+                    empty.classList.remove("hidden");
+                } else if (title.validity.patternMismatch) {
+                    title.classList.add("border-red-700");
+                    mismatch.classList.remove("hidden");
+                }
+                else if (director.validity.tooShort || director.validity.valueMissing) {
+                    director.classList.add("border-red-700");
+                    directorUnderflow.classList.remove("hidden");
+                } else if (director.validity.patternMismatch) {
+                    director.classList.add("border-red-700");
+                    directorMismatch.classList.remove("hidden");
+                } else {
+                    form.submit();
+                }
+            });
+        </script>
+    </body>
+</html>
