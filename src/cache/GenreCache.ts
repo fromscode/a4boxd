@@ -11,7 +11,10 @@ class GenreCache {
         return this.genres.length == 0;
     }
 
-    getGenre(genreId: number) {
+    async getGenre(genreId: number) {
+        if (this.isEmpty()) {
+            await this.fetchGenres();
+        }
         return this.genres.find((genre) => genre.id === genreId);
     }
 }

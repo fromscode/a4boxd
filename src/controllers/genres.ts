@@ -40,7 +40,7 @@ const getGenre = [
         }
 
         const genreId = +param;
-        const genre = genreCache.getGenre(genreId);
+        const genre = await genreCache.getGenre(genreId);
 
         if (!genre) {
             next(NotFoundError);
