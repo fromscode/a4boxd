@@ -39,10 +39,34 @@ async function deleteGenre(genreId: number) {
     await pool.query("delete from genre where id = $1", [genreId]);
 }
 
+async function insertMovie(
+    title: string,
+    year: number,
+    dir: string,
+    desc: string,
+    genreId: number,
+    added_by: string,
+) {
+    await pool.query(
+        `INSERT INTO movie (title, year, director, description, added_by, added_at) VALUES
+        ($1, $2, $3, $4, $5, NOW())`,
+        [title, year, dir, desc, added_by],
+    );
+
+    const result = await pool.query("select max(id) from movie");
+    const movieId = result.rows[0].max;
+
+    await pool.query(
+        `INSERT INTO movie_genre (movie_id, genre_id) VALUES ($1, $2)`,
+        [movieId, genreId],
+    );
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
     getMoviesByGenreId,
     insertGenre,
     deleteGenre,
+    insertMovie,
 };
