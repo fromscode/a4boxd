@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="scrollbar-color: var(--color-zinc-700) var(--color-mauve-950);">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -11,7 +11,7 @@
         flex-col h-screen"
     >
         <%- include('navbar') %>
-        <main class="flex-1 flex flex-col h-full px-3">
+        <main class="flex-1 flex flex-col px-3">
             <section>
                 <div class="flex items-center">
                     <h1 class="text-6xl font-normal">
@@ -47,48 +47,55 @@
                 <ul class="rounded-xl flex-1 bg-zinc-900 pb-2">
                     <% reviews.forEach(review => { %>
                         <li class="cursor-pointer hover:bg-zinc-700 first:rounded-t-xl ">
-                            <div class="p-2">
-                                <div class="flex">
-                                    <span class="text-mauve-400">
-                                        <%= review.added_by %>
-                                    </span>
-                                    <span class="flex ml-auto pr-2 self-center">
-                                        <% for (let i=0; i<review.rating-1; ++i) { %>
-                                        
-                                            <div class="">
+                            <a href="<%= "/review/" + review.id %>">
+                                <div class="p-2">
+                                    <div class="flex">
+                                        <span class="text-mauve-400">
+                                            <%= review.added_by %>
+                                        </span>
+                                        <span class="flex ml-auto pr-2 self-center icon">
+                                            <% for (let i=0; i<review.rating-1; ++i) { %>
+                                            
+                                                <div class="">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" 
+                                                    viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                                    </svg>                                          
+                                                </div>
+                                            <% } %>
+                                            <% if (review.rating && review.rating % 1 == 0) { %>
                                                 <svg xmlns="http://www.w3.org/2000/svg" 
-                                                viewBox="0 0 20 20" fill="currentColor" class="size-4">
-                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                                    viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                                        <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
                                                 </svg>                                          
-                                            </div>
-                                        <% } %>
-                                        <% if (review.rating && review.rating % 1 == 0) { %>
-                                            <svg xmlns="http://www.w3.org/2000/svg" 
-                                                viewBox="0 0 20 20" fill="currentColor" class="size-4">
-                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-                                            </svg>                                          
-                                        <% } else if (review.rating) { %>
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" 
-                                            class="size-4">
-                                                <defs>
-                                                <linearGradient id="half-star-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                                                    <stop offset="50%" stop-color="currentColor" />
-                                                    <stop offset="50%" stop-color="bg-zinc-700" stop-opacity="1" />
-                                                </linearGradient>
-                                                </defs>
-                                                <path fill="url(#half-star-gradient)" fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
-                                            </svg>
-                                        <% }%>    
-                                    </span>
+                                            <% } else if (review.rating) { %>
+                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" 
+                                                class="size-4">
+                                                    <defs>
+                                                    <linearGradient id="half-star-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                        <stop offset="50%" stop-color="white" />
+                                                        <stop offset="50%" stop-color="bg-zinc-700" stop-opacity="1" />
+                                                    </linearGradient>
+                                                    </defs>
+                                                    <path fill="url(#half-star-gradient)" fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                                </svg>
+                                            <% }%>    
+                                        </span>
+                                        <span class="self-center absolute invisible right-5 chevron">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                                                <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                                            </svg>                                      
+                                        </span>
+                                    </div>
+                                    <p class="text-mauve-300 mt-1">
+                                        <% if (review.review.length > 200) { %>
+                                            <%= review.review.slice(0, 200) %>...
+                                        <% } else { %>
+                                            <%= review.review %>
+                                        <% }%>
+                                    </p>
                                 </div>
-                                <p class="text-mauve-300 mt-1">
-                                    <% if (review.review.length > 200) { %>
-                                        <%= review.review.slice(0, 200) %>...
-                                    <% } else { %>
-                                        <%= review.review %>
-                                    <% }%>
-                                </p>
-                            </div>
+                            </a>
                             <hr class="text-mauve-700">
                         </li>
                     <% }) %>
@@ -96,5 +103,21 @@
             </section>
 
         </main>
+
+        <script>
+            const lis = document.querySelectorAll('li');
+
+            lis.forEach(li => {
+                li.addEventListener('mouseenter', () => {
+                    li.querySelector('.icon').classList.add('invisible');
+                    li.querySelector('.chevron').classList.remove('invisible');
+                });
+
+                li.addEventListener('mouseleave', () => {
+                    li.querySelector('.icon').classList.remove('invisible');
+                    li.querySelector('.chevron').classList.add('invisible');
+                });
+            })
+        </script>
     </body>
 </html>

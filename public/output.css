@@ -615,6 +615,9 @@
       }
     }
   }
+  .invisible {
+    visibility: hidden;
+  }
   .toast {
     @layer daisyui.l1.l2.l3 {
       position: fixed;
@@ -1293,8 +1296,17 @@
   .top-3 {
     top: calc(var(--spacing) * 3);
   }
+  .right-0 {
+    right: calc(var(--spacing) * 0);
+  }
   .right-1 {
     right: calc(var(--spacing) * 1);
+  }
+  .right-2 {
+    right: calc(var(--spacing) * 2);
+  }
+  .right-5 {
+    right: calc(var(--spacing) * 5);
   }
   .right-10 {
     right: calc(var(--spacing) * 10);
@@ -1446,6 +1458,9 @@
         cursor: not-allowed;
       }
     }
+  }
+  .z-10 {
+    z-index: 10;
   }
   .m-2 {
     margin: calc(var(--spacing) * 2);
