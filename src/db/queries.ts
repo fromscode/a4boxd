@@ -77,6 +77,21 @@ async function insertMovie(
     await pool.query(insertQuery, values);
 }
 
+async function getMovie(movieId: number) {
+    const { rows } = await pool.query("SELECT * FROM movie WHERE id = $1", [
+        movieId,
+    ]);
+    return rows[0];
+}
+
+async function getReviews(movieId: number) {
+    const { rows } = await pool.query(
+        "SELECT * from review WHERE movie_id = $1",
+        [movieId],
+    );
+    return rows;
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -84,4 +99,6 @@ export default {
     insertGenre,
     deleteGenre,
     insertMovie,
+    getMovie,
+    getReviews,
 };

@@ -7,4 +7,6 @@ router.get("/addMovie/", movieController.addMovie);
 
 router.post("/addMovie/confirm", movieController.confirmAddMovie);
 
+router.get("/:movieId", movieController.viewMovie);
+
 export default router;

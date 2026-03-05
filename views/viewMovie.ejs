@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home</title>
+        <link rel="stylesheet" href="/output.css" />
+    </head>
+    <body
+        class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col h-screen overflow-hidden"
+    >
+        <%- include('navbar') %>
+        <main class="flex flex-1 h-full overflow-hidden">
+            <h1>
+                <%= movie.title %>
+            </h1>
+
+            <% reviews.forEach(review => { %>
+                <div>
+                    <%= review.review %>
+                </div>
+            <% }) %>
+        </main>
+    </body>
+</html>

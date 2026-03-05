@@ -3,6 +3,7 @@ import GenreCache from "../cache/GenreCache.js";
 import { body, matchedData, validationResult } from "express-validator";
 import BadRequest from "../errors/BadRequest.js";
 import queries from "../db/queries.js";
+import NotFoundError from "../errors/NotFoundError.js";
 
 const addMovie = [
     async (req: Request, res: Response, next: NextFunction) => {
@@ -101,7 +102,29 @@ const confirmAddMovie = [
     },
 ];
 
+const viewMovie = [
+    async (req: Request, res: Response, next: NextFunction) => {
+        const movieId = +(req.params.movieId as string);
+
+        const movie = await queries.getMovie(movieId);
+        if (!movie) {
+            next(NotFoundError);
+            return;
+        }
+
+        const reviews = await queries.getReviews(movieId);
+
+        const renderData = {
+            movie: movie,
+            reviews: reviews,
+        };
+
+        res.render("viewMovie", renderData);
+    },
+];
+
 export default {
     addMovie,
     confirmAddMovie,
+    viewMovie,
 };
