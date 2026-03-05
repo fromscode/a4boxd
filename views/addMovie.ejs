@@ -7,202 +7,205 @@
         <link rel="stylesheet" href="/output.css" />
         <link rel="stylesheet" href="/addMovie.css" />
     </head>
-    <body class="bg-mauve-950 h-screen flex justify-center items-center">
-        <form
-            action="confirm"
-            method="post"
-            class="border border-mauve-300 p-8 flex flex-col gap-10"
-        >
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="title" class="flex-1 text-right font-light"
-                        >Title:
-                    </label>
-                    <input
-                        type="text"
-                        name="title"
-                        id="title"
-                        placeholder="Seven Samurai"
-                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
-                        pattern="[\w *\-]+"
-                        maxlength="200"
-                        required
-                    />
-                </div>
-                <div id="title-errors">
-                    <p
-                        class="font-light text-red-600 text-center mt-2 hidden"
-                        id="value-missing"
-                    >
-                        Title cannot be empty
-                    </p>
-                    <p
-                        class="font-light text-red-600 text-center mt-2 hidden"
-                        id="value-mismatch"
-                    >
-                        Title cannot contain any special characters
-                    </p>
-                </div>
-            </fieldset>
+    <body class="bg-mauve-950 h-screen flex flex-col justify-center items-center">
+        <%- include('navbar') %>
+        <div class="flex-1 justify-center flex items-center">
+            <form
+                action="confirm"
+                method="post"
+                class="border border-mauve-300 p-8 flex flex-col gap-10"
+            >
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="title" class="flex-1 text-right font-light"
+                            >Title:
+                        </label>
+                        <input
+                            type="text"
+                            name="title"
+                            id="title"
+                            placeholder="Seven Samurai"
+                            class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                            pattern="[\w *\-]+"
+                            maxlength="200"
+                            required
+                        />
+                    </div>
+                    <div id="title-errors">
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="value-missing"
+                        >
+                            Title cannot be empty
+                        </p>
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="value-mismatch"
+                        >
+                            Title cannot contain any special characters
+                        </p>
+                    </div>
+                </fieldset>
 
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="year" class="flex-1 text-right font-light max-w-sm"
-                        >Year:
-                    </label>
-                    <select
-                        name="year"
-                        id="year"
-                        class="border border-mauve-500 p-2 pl-2 flex-3
-                        rounded-md font-light outline-0 cursor-pointer
-                        "
-                    >
-                        <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
-                            <option value="<%= i %>"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5"
-                                ><%= i %></option>
-                        <% }%>
-                        <option value="1900" 
-                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                        pl-2 pr-5">Before 1940</option>
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="director" class="flex-1 text-right font-light"
-                        >Director:
-                    </label>
-                    <input
-                        type="text"
-                        name="director"
-                        id="director"
-                        placeholder="Akira Kurosawa"
-                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
-                        pattern="[a-zA-Z]+[a-zA-Z. ]*"
-                        minlength="3"
-                        maxlength="30"
-                        required
-                    />
-                </div>
-                <div id="title-errors">
-                    <p
-                        class="font-light text-red-600 text-center mt-2 hidden"
-                        id="director-underflow"
-                    >
-                        Director's name must be at least 3 characters
-                    </p>
-                    <p
-                        class="font-light text-red-600 text-center mt-2 hidden"
-                        id="director-mismatch"
-                    >
-                    Director's name cannot contain any special characters
-                    </p>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="desc" class="flex-1 text-right font-light"
-                        >Description:
-                    </label>
-                    <textarea
-                        type="text"
-                        name="desc"
-                        id="desc"
-                        class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
-                        font-light outline-0 w-sm resize-none text-mauve-200"
-                        placeholder="Seven Samurais. One Village. Total Action."
-                        required
-                    ></textarea>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="genre" class="flex-1 text-right font-light max-w-sm"
-                        >Genres:
-                    </label>
-                    <div class="flex-3 flex gap-2">
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="year" class="flex-1 text-right font-light max-w-sm"
+                            >Year:
+                        </label>
                         <select
-                            name="genre1"
-                            id="genre"
-                            class="border border-mauve-500 p-2 pl-2 flex-1
+                            name="year"
+                            id="year"
+                            class="border border-mauve-500 p-2 pl-2 flex-3
                             rounded-md font-light outline-0 cursor-pointer
                             "
                         >
-                            <% for (const gen of genres) { %>
-                                <option value="<%= gen.id %>"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5"
-                                ><%= gen.genre %></option>
+                            <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
+                                <option value="<%= i %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= i %></option>
                             <% }%>
-                        </select>
-                        <select
-                            name="genre2"
-                            id="genre"
-                            class="border border-mauve-500 p-2 pl-2 flex-1
-                            rounded-md font-light outline-0 cursor-pointer
-                            "
-                        >   
-                            <option value="0"
+                            <option value="1900" 
                             class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5">None</option>
-                            <% for (const gen of genres) { %>
-                                <option value="<%= gen.id %>"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5"
-                                ><%= gen.genre %></option>
-                            <% }%>
-                        </select>
-                        <select
-                            name="genre3"
-                            id="genre"
-                            class="border border-mauve-500 p-2 pl-2 flex-1
-                            rounded-md font-light outline-0 cursor-pointer
-                            "
-                        >
-                            <option value="0"
-                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5">None</option>
-                            <% for (const gen of genres) { %>
-                                <option value="<%= gen.id %>"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                pl-2 pr-5"
-                                ><%= gen.genre %></option>
-                            <% }%>
+                            pl-2 pr-5">Before 1940</option>
                         </select>
                     </div>
-                </div>
-            </fieldset>
-            
-            <fieldset>
-                <div class="flex gap-5">
-                    <label for="added-by" class="flex-1 text-right font-light"
-                        >Username:
-                    </label>
-                    <input
-                        type="text"
-                        name="added-by"
-                        id="added-by"
-                        placeholder="fromscode"
-                        maxlength="30"
-                        class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
-                    />
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <div class="flex justify-center">
-                <button
-                    type="submit"
-                    class="border-2 py-1 px-5 border-mauve-600 rounded-full cursor-pointer hover:bg-mauve-100 hover:text-mauve-950 hover:border-mauve-100"
-                >
-                    Add
-                </button>
-            </div>
-        </form>
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="director" class="flex-1 text-right font-light"
+                            >Director:
+                        </label>
+                        <input
+                            type="text"
+                            name="director"
+                            id="director"
+                            placeholder="Akira Kurosawa"
+                            class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                            pattern="[a-zA-Z]+[a-zA-Z. ]*"
+                            minlength="3"
+                            maxlength="30"
+                            required
+                        />
+                    </div>
+                    <div id="title-errors">
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="director-underflow"
+                        >
+                            Director's name must be at least 3 characters
+                        </p>
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="director-mismatch"
+                        >
+                        Director's name cannot contain any special characters
+                        </p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="desc" class="flex-1 text-right font-light"
+                            >Description:
+                        </label>
+                        <textarea
+                            type="text"
+                            name="desc"
+                            id="desc"
+                            class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
+                            font-light outline-0 w-sm resize-none text-mauve-200"
+                            placeholder="Seven Samurais. One Village. Total Action."
+                            required
+                        ></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="genre" class="flex-1 text-right font-light max-w-sm"
+                            >Genres:
+                        </label>
+                        <div class="flex-3 flex gap-2">
+                            <select
+                                name="genre1"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                            <select
+                                name="genre2"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >   
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5">None</option>
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                            <select
+                                name="genre3"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5">None</option>
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="added-by" class="flex-1 text-right font-light"
+                            >Username:
+                        </label>
+                        <input
+                            type="text"
+                            name="added-by"
+                            id="added-by"
+                            placeholder="fromscode"
+                            maxlength="30"
+                            class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
+                        />
+                    </div>
+                </fieldset>
+
+                <div class="flex justify-center">
+                    <button
+                        type="submit"
+                        class="border-2 py-1 px-5 border-mauve-600 rounded-full cursor-pointer hover:bg-mauve-100 hover:text-mauve-950 hover:border-mauve-100"
+                    >
+                        Add
+                    </button>
+                </div>
+            </form>
+        </div>
 
         <script>
             const tile = document.getElementById("title");

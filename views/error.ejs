@@ -9,11 +9,13 @@
     <body
         class="bg-mauve-950 font-display tracking-tight font-extralight h-screen flex flex-col items-center justify-center"
     >
-    <div class="flex items-center justify-center gap-1">
-        <div class="font-bold text-3xl"><%= err.status || 500 %></div>
-        <span class="font-thin text-6xl">|</span>
-        <div class=""><%= err.status ? err.message : "Internal Server Error" %></div>
-    </div>
+    <%- include('navbar') %>
+    <div class="flex-1 justify-center flex items-center flex-col">
+        <div class="flex items-center justify-center gap-1">
+            <div class="font-bold text-3xl"><%= err.status || 500 %></div>
+            <span class="font-thin text-6xl">|</span>
+            <div class=""><%= err.status ? err.message : "Internal Server Error" %></div>
+        </div>
         <% if (err.errors && err.errors.length) { %>
             <ul>
                 <% err.errors.forEach(error => { %>
@@ -22,5 +24,6 @@
             </ul>
         <% } %>
         <div class="underline hover:no-underline underline-offset-1"><a href="/">Back to Home</a></div>
+    </div>
     </body>
 </html>

@@ -7,7 +7,9 @@
         <link rel="stylesheet" href="/output.css" />
     </head>
     <body>
-        <body class="bg-mauve-950 h-screen flex justify-center items-center">
+        <body class="bg-mauve-950 h-screen flex flex-col justify-center items-center">
+            <%- include('navbar') %>
+            <div class="flex-1 justify-center flex items-center">
             <form
                 action="<%= "/genres/confirm-delete/" + id %>"
                 method="post"
@@ -55,6 +57,7 @@
                     </button>
                 </div>
             </form>
+            </div>
 
 
 
