@@ -37,18 +37,30 @@ const validateMovieForm = [
             max: 50,
         })
         .matches(/^[a-zA-Z]+[a-zA-Z. ]*$/gmv),
-    body("genre1").escape().notEmpty().isInt({
-        min: 0,
-        max: 2147483647,
-    }),
-    body("genre2").escape().notEmpty().isInt({
-        min: 0,
-        max: 2147483647,
-    }),
-    body("genre3").escape().notEmpty().isInt({
-        min: 0,
-        max: 2147483647,
-    }),
+    body("genre1")
+        .escape()
+        .notEmpty()
+        .isInt({
+            min: 1,
+            max: 2147483647,
+        })
+        .toInt(),
+    body("genre2")
+        .escape()
+        .notEmpty()
+        .isInt({
+            min: 0,
+            max: 2147483647,
+        })
+        .toInt(),
+    body("genre3")
+        .escape()
+        .notEmpty()
+        .isInt({
+            min: 0,
+            max: 2147483647,
+        })
+        .toInt(),
     body("desc").escape(),
     body("added-by").escape(),
 ];
@@ -64,14 +76,22 @@ const confirmAddMovie = [
         }
 
         const sanitized = matchedData(req);
+        const maxId = GenreCache.maxId();
+
+        const { genre1, genre2, genre3 } = sanitized;
+        if (genre1 > maxId || genre2 > maxId || genre3 > maxId) {
+            next(BadRequest);
+            return;
+        }
+
         await queries.insertMovie(
             sanitized.title,
             sanitized.year,
             sanitized.director,
             sanitized.desc,
-            +sanitized.genre1,
-            +sanitized.genre2,
-            +sanitized.genre3,
+            genre1,
+            genre2,
+            genre3,
             sanitized.added_by || "Anonymous",
         );
 
