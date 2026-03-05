@@ -3,23 +3,98 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Home</title>
+        <title>a4boxd</title>
         <link rel="stylesheet" href="/output.css" />
     </head>
     <body
-        class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col h-screen overflow-hidden"
+        class="font-display tracking-tight font-extralight bg-mauve-950 flex 
+        flex-col h-screen"
     >
         <%- include('navbar') %>
-        <main class="flex flex-1 h-full overflow-hidden">
-            <h1>
-                <%= movie.title %>
-            </h1>
+        <main class="flex-1 flex flex-col h-full px-3">
+            <section>
+                <div class="flex items-center">
+                    <h1 class="text-6xl font-normal">
+                        <%= movie.title %>
+                    </h1>
 
-            <% reviews.forEach(review => { %>
-                <div>
-                    <%= review.review %>
+                    <span class="text-xl ml-auto"><%= movie.year %></span>
                 </div>
-            <% }) %>
+
+                <div class="text-xl my-2 text-mauve-400">
+                    <span class="font-extralight"> 
+                        Director: 
+                    </span>
+                    <span class="font-normal">
+                        <%= movie.director %>
+                    </span>
+                </div>
+
+                <p class="text-mauve-300 font-light">
+                    <%= movie.description %>
+                </p>
+
+                <p class="flex justify-end items-end gap-1 tracking-tighter">
+                    <span class="text-mauve-300">added by</span>
+                    <span class="text-xl font-normal"><%= movie.added_by %></span>
+                </p>
+            </section> 
+
+            <hr class="text-mauve-600 my-2">
+
+            <section class="my-5 flex flex-col flex-1 pb-2">
+                <h2 class="text-2xl font-normal">Reviews: </h2>
+                <ul class="rounded-xl flex-1 bg-zinc-900 pb-2">
+                    <% reviews.forEach(review => { %>
+                        <li class="cursor-pointer hover:bg-zinc-700 first:rounded-t-xl ">
+                            <div class="p-2">
+                                <div class="flex">
+                                    <span class="text-mauve-400">
+                                        <%= review.added_by %>
+                                    </span>
+                                    <span class="flex ml-auto pr-2 self-center">
+                                        <% for (let i=0; i<review.rating-1; ++i) { %>
+                                        
+                                            <div class="">
+                                                <svg xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                                </svg>                                          
+                                            </div>
+                                        <% } %>
+                                        <% if (review.rating && review.rating % 1 == 0) { %>
+                                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                                viewBox="0 0 20 20" fill="currentColor" class="size-4">
+                                                    <path fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                            </svg>                                          
+                                        <% } else if (review.rating) { %>
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" 
+                                            class="size-4">
+                                                <defs>
+                                                <linearGradient id="half-star-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                    <stop offset="50%" stop-color="currentColor" />
+                                                    <stop offset="50%" stop-color="bg-zinc-700" stop-opacity="1" />
+                                                </linearGradient>
+                                                </defs>
+                                                <path fill="url(#half-star-gradient)" fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                            </svg>
+                                        <% }%>    
+                                    </span>
+                                </div>
+                                <p class="text-mauve-300 mt-1">
+                                    <% if (review.review.length > 200) { %>
+                                        <%= review.review.slice(0, 200) %>...
+                                    <% } else { %>
+                                        <%= review.review %>
+                                    <% }%>
+                                </p>
+                            </div>
+                            <hr class="text-mauve-700">
+                        </li>
+                    <% }) %>
+                </ul>  
+            </section>
+
         </main>
     </body>
 </html>
