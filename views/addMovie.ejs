@@ -123,22 +123,58 @@
             <fieldset>
                 <div class="flex gap-5">
                     <label for="genre" class="flex-1 text-right font-light max-w-sm"
-                        >Genre:
+                        >Genres:
                     </label>
-                    <select
-                        name="genre"
-                        id="genre"
-                        class="border border-mauve-500 p-2 pl-2 flex-3
-                        rounded-md font-light outline-0 cursor-pointer
-                        "
-                    >
-                        <% for (const gen of genres) { %>
-                            <option value="<%= gen.id %>"
+                    <div class="flex-3 flex gap-2">
+                        <select
+                            name="genre1"
+                            id="genre"
+                            class="border border-mauve-500 p-2 pl-2 flex-1
+                            rounded-md font-light outline-0 cursor-pointer
+                            "
+                        >
+                            <% for (const gen of genres) { %>
+                                <option value="<%= gen.id %>"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                pl-2 pr-5"
+                                ><%= gen.genre %></option>
+                            <% }%>
+                        </select>
+                        <select
+                            name="genre2"
+                            id="genre"
+                            class="border border-mauve-500 p-2 pl-2 flex-1
+                            rounded-md font-light outline-0 cursor-pointer
+                            "
+                        >   
+                            <option value="0"
                             class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                            pl-2 pr-5"
-                            ><%= gen.genre %></option>
-                        <% }%>
-                    </select>
+                                pl-2 pr-5">None</option>
+                            <% for (const gen of genres) { %>
+                                <option value="<%= gen.id %>"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                pl-2 pr-5"
+                                ><%= gen.genre %></option>
+                            <% }%>
+                        </select>
+                        <select
+                            name="genre3"
+                            id="genre"
+                            class="border border-mauve-500 p-2 pl-2 flex-1
+                            rounded-md font-light outline-0 cursor-pointer
+                            "
+                        >
+                            <option value="0"
+                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                pl-2 pr-5">None</option>
+                            <% for (const gen of genres) { %>
+                                <option value="<%= gen.id %>"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                pl-2 pr-5"
+                                ><%= gen.genre %></option>
+                            <% }%>
+                        </select>
+                    </div>
                 </div>
             </fieldset>
             

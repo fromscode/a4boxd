@@ -44,7 +44,9 @@ async function insertMovie(
     year: number,
     dir: string,
     desc: string,
-    genreId: number,
+    genreId1: number,
+    genreId2: number,
+    genreId3: number,
     added_by: string,
 ) {
     await pool.query(
@@ -56,10 +58,23 @@ async function insertMovie(
     const result = await pool.query("select max(id) from movie");
     const movieId = result.rows[0].max;
 
-    await pool.query(
-        `INSERT INTO movie_genre (movie_id, genre_id) VALUES ($1, $2)`,
-        [movieId, genreId],
-    );
+    let insertQuery = `INSERT INTO movie_genre (movie_id, genre_id) VALUES ($1, $2)`;
+    let values = [movieId, genreId1];
+
+    if (genreId2 && genreId3) {
+        insertQuery += `, ($1, $3), ($1, $4)`;
+        values.push(genreId2, genreId3);
+    } else if (genreId2) {
+        insertQuery += `, ($1, $3)`;
+        values.push(genreId2);
+    } else if (genreId3) {
+        insertQuery += `, ($1, $3)`;
+        values.push(genreId3);
+    }
+
+    insertQuery += ";";
+
+    await pool.query(insertQuery, values);
 }
 
 export default {

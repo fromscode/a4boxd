@@ -37,7 +37,15 @@ const validateMovieForm = [
             max: 50,
         })
         .matches(/^[a-zA-Z]+[a-zA-Z. ]*$/gmv),
-    body("genre").escape().notEmpty().isInt({
+    body("genre1").escape().notEmpty().isInt({
+        min: 0,
+        max: 2147483647,
+    }),
+    body("genre2").escape().notEmpty().isInt({
+        min: 0,
+        max: 2147483647,
+    }),
+    body("genre3").escape().notEmpty().isInt({
         min: 0,
         max: 2147483647,
     }),
@@ -61,7 +69,9 @@ const confirmAddMovie = [
             sanitized.year,
             sanitized.director,
             sanitized.desc,
-            sanitized.genre,
+            +sanitized.genre1,
+            +sanitized.genre2,
+            +sanitized.genre3,
             sanitized.added_by || "Anonymous",
         );
 
