@@ -92,6 +92,13 @@ async function getReviews(movieId: number) {
     return rows;
 }
 
+async function getReview(reviewId: number) {
+    const { rows } = await pool.query("SELECT * FROM review WHERE id = $1", [
+        reviewId,
+    ]);
+    return rows[0];
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -101,4 +108,5 @@ export default {
     insertMovie,
     getMovie,
     getReviews,
+    getReview,
 };

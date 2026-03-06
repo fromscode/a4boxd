@@ -3,6 +3,7 @@ import express from "express";
 import indexRouter from "./routes/index.js";
 import genreRouter from "./routes/genres.js";
 import movieRouter from "./routes/movies.js";
+import reviewRouter from "./routes/reviews.js";
 
 import notFound from "./middlewares/notFound.js";
 import errorHandler from "./middlewares/errorHandler.js";
@@ -20,6 +21,7 @@ app.use(express.static(path.join(import.meta.dirname, "..", "public")));
 app.use(indexRouter);
 app.use("/genres", genreRouter);
 app.use("/movies", movieRouter);
+app.use("/reviews", reviewRouter);
 
 app.use(notFound);
 app.use(errorHandler);
