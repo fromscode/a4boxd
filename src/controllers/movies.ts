@@ -1,6 +1,6 @@
 import type { NextFunction, Request, Response } from "express";
 import GenreCache from "../cache/GenreCache.js";
-import { body, matchedData, validationResult } from "express-validator";
+import { body, matchedData, param, validationResult } from "express-validator";
 import BadRequest from "../errors/BadRequest.js";
 import queries from "../db/queries.js";
 import NotFoundError from "../errors/NotFoundError.js";
@@ -98,9 +98,29 @@ const confirmAddMovie = [
     },
 ];
 
+const validateMovieId = [
+    param("movieId")
+        .notEmpty()
+        .isLength({
+            max: 10,
+        })
+        .isInt({
+            min: 1,
+            max: 2147483647,
+        })
+        .toInt(),
+];
+
 const viewMovie = [
+    ...validateMovieId,
     async (req: Request, res: Response, next: NextFunction) => {
-        const movieId = +(req.params.movieId as string);
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
 
         if (!MovieCache.movie || MovieCache.movie.id != movieId) {
             const movie = await queries.getMovie(movieId);
