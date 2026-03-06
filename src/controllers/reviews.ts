@@ -28,7 +28,6 @@ const viewReview = [
         }
 
         const { reviewId } = matchedData(req);
-        console.log(reviewId);
 
         const review = await queries.getReview(reviewId);
         if (!review) {
@@ -75,7 +74,6 @@ const addReviewForm = [
         }
 
         const { movieId } = matchedData(req);
-        console.log(movieId);
 
         const movie = await queries.getMovie(movieId);
 

@@ -155,7 +155,6 @@
                             path.setAttribute('fill', "white");
                         }
                         for (let i=+id+1; i<5; ++i) {
-                            if (!document.getElementById(i)) console.log(i)
                             const path = document.getElementById(i).querySelector('path');
                             path.setAttribute('fill', "var(--color-zinc-700)");
                         }
@@ -183,7 +182,6 @@
                     else if (rated == 1) {
                         // rated full
                         const path = star.querySelector('path')
-                        console.log('here')
                         const fill = `url(#half-star-gradient-${id})`
                         path.setAttribute('fill', fill);
                         rated = 0.5
