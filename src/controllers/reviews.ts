@@ -42,6 +42,43 @@ const viewReview = [
     },
 ];
 
+const validateViewFormRequest = [
+    param("movieId")
+        .escape()
+        .notEmpty()
+        .isLength({
+            max: 10,
+        })
+        .isInt({
+            min: 1,
+            max: 2147483647,
+        })
+        .toInt(),
+];
+
+const addReviewForm = [
+    ...validateViewFormRequest,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
+        console.log(movieId);
+
+        const movie = await queries.getMovie(movieId);
+
+        const renderData = {
+            movie: movie,
+        };
+
+        res.render("addReview", renderData);
+    },
+];
+
 export default {
     viewReview,
+    addReviewForm,
 };
