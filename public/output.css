@@ -1893,6 +1893,9 @@
   .py-5 {
     padding-block: calc(var(--spacing) * 5);
   }
+  .pt-2 {
+    padding-top: calc(var(--spacing) * 2);
+  }
   .pr-2 {
     padding-right: calc(var(--spacing) * 2);
   }
