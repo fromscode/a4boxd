@@ -3,6 +3,7 @@ import { validationResult, param, matchedData, body } from "express-validator";
 import NotFoundError from "../errors/NotFoundError.js";
 import queries from "../db/queries.js";
 import BadRequest from "../errors/BadRequest.js";
+import MovieCache from "../cache/MovieCache.js";
 
 const validateReviewId = [
     param("reviewId")
@@ -30,12 +31,21 @@ const viewReview = [
         console.log(reviewId);
 
         const review = await queries.getReview(reviewId);
+        if (!review) {
+            next(NotFoundError);
+            return;
+        }
+
         const movieId = review.movie_id;
-        const movie = await queries.getMovie(movieId);
+
+        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
+            const movie = await queries.getMovie(movieId);
+            MovieCache.movie = movie;
+        }
 
         const renderData = {
             review: review,
-            movie: movie,
+            movie: MovieCache.movie,
         };
 
         res.render("viewReview", renderData);

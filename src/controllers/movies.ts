@@ -4,6 +4,7 @@ import { body, matchedData, validationResult } from "express-validator";
 import BadRequest from "../errors/BadRequest.js";
 import queries from "../db/queries.js";
 import NotFoundError from "../errors/NotFoundError.js";
+import MovieCache from "../cache/MovieCache.js";
 
 const addMovie = [
     async (req: Request, res: Response, next: NextFunction) => {
@@ -101,16 +102,19 @@ const viewMovie = [
     async (req: Request, res: Response, next: NextFunction) => {
         const movieId = +(req.params.movieId as string);
 
-        const movie = await queries.getMovie(movieId);
-        if (!movie) {
-            next(NotFoundError);
-            return;
+        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
+            const movie = await queries.getMovie(movieId);
+            if (!movie) {
+                next(NotFoundError);
+                return;
+            }
+            MovieCache.movie = movie;
         }
 
         const reviews = await queries.getReviews(movieId);
 
         const renderData = {
-            movie: movie,
+            movie: MovieCache.movie,
             reviews: reviews,
         };
 
