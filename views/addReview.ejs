@@ -29,43 +29,53 @@
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="year" class="flex-1 text-right font-light max-w-sm"
+                        <label for="rating" class="flex-1 text-right font-light max-w-sm"
                             >Rating:
                         </label>
-                        <select
-                            name="year"
-                            id="year"
-                            class="border border-mauve-500 p-2 pl-2 flex-3
-                            rounded-md font-light outline-0 cursor-pointer
-                            "
-                        >
-                            <% for (let i=5; i>=0.5; i -= 0.5) { %>
-                                <option value="<%= i %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= i %></option>
-                            <% }%>
-                            <option value="0" 
-                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                            pl-2 pr-5">Unrated</option>
-                        </select>
+                        <input type="number" name="rating" id="rating" value="0" hidden>
+                        <div class="flex-3 self-center">
+                            <span class="flex mr-auto icon w-fit">
+                                <% for (let i=0; i<5; ++i) { %>
+                                    <div>
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" 
+                                        class="size-5" id="<%= i %>">
+                                            <defs>
+                                            <linearGradient id="<%= "half-star-gradient-" + i %>" x1="0%" y1="0%" x2="100%" y2="0%">
+                                                <stop offset="50%" stop-color="white" />
+                                                <stop offset="50%" stop-color="var(--color-zinc-700)" stop-opacity="1" />
+                                            </linearGradient>
+                                            </defs>
+                                            <path fill="var(--color-zinc-700)" fill-rule="evenodd" d="M10.868 2.884c-.321-.772-1.415-.772-1.736 0l-1.83 4.401-4.753.381c-.833.067-1.171 1.107-.536 1.651l3.62 3.102-1.106 4.637c-.194.813.691 1.456 1.405 1.02L10 15.591l4.069 2.485c.713.436 1.598-.207 1.404-1.02l-1.106-4.637 3.62-3.102c.635-.544.297-1.584-.536-1.65l-4.752-.382-1.831-4.401Z" clip-rule="evenodd" />
+                                        </svg>                                         
+                                    </div>
+                                <% } %>
+                            </span>
+                        </div> 
                     </div>
                 </fieldset>
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="desc" class="flex-1 text-right font-light"
+                        <label for="review" class="flex-1 text-right font-light"
                             >Review:
                         </label>
                         <textarea
                             type="text"
-                            name="desc"
-                            id="desc"
+                            name="review"
+                            id="review"
                             class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
                             font-light outline-0 w-sm resize-none text-mauve-200"
-                            placeholder="Seven Samurais. One Village. Total Action."
+                            minlength="3"
                             required
                         ></textarea>
+                    </div>
+                    <div>
+                        <p class="text-red-600 justify-center font-light hidden" id="error-msg">
+                            Both Review and Rating cannot be empty.
+                        </p>
+                        <p class="text-red-600 justify-center font-light hidden" id="too-short">
+                            Rating must be have more than 3 characters.
+                        </p>
                     </div>
                 </fieldset>
                 
@@ -97,93 +107,108 @@
         </div>
 
         <script>
-            const tile = document.getElementById("title");
+            const rating = document.getElementById("rating");
+            const review = document.getElementById('review');
+            const msg = document.getElementById('error-msg');
+            const short = document.getElementById('too-short');
             const button = document.querySelector("button");
-            const empty = document.getElementById("value-missing");
-            const mismatch = document.getElementById("value-mismatch");
-
-            title.addEventListener("input", () => {
-                if (title.validity.valid) {
-                    title.classList.remove("border-red-700");
-                    empty.classList.add("hidden");
-                    mismatch.classList.add("hidden");
-                } else {
-                    if (!title.validity.valueMissing) {
-                        empty.classList.add("hidden");
-                    }
-                    if (!title.validity.patternMismatch) {
-                        mismatch.classList.add("hidden");
-                    }
-                }
-            });
-
-            title.addEventListener("change", () => {
-                if (title.validity.valid) {
-                    title.classList.remove("border-red-700");
-                    empty.classList.add("hidden");
-                    mismatch.classList.add("hidden");
-                } else if (title.validity.valueMissing) {
-                    title.classList.add("border-red-700");
-                    empty.classList.remove("hidden");
-                } else if (title.validity.patternMismatch) {
-                    title.classList.add("border-red-700");
-                    mismatch.classList.remove("hidden");
-                }
-            });
-
-            const director = document.getElementById("director");
-            const directorUnderflow = document.getElementById("director-underflow");
-            const directorMismatch = document.getElementById("director-mismatch");
-
-            director.addEventListener("input", () => {
-                if (director.validity.valid) {
-                    director.classList.remove("border-red-700");
-                    directorUnderflow.classList.add("hidden");
-                    directorMismatch.classList.add("hidden");
-                } else {
-                    if (!director.validity.tooShort || !director.validity.valueMissing) {
-                        directorUnderflow.classList.add("hidden");
-                    }
-                    if (!director.validity.patternMismatch) {
-                        directorMismatch.classList.add("hidden");
-                    }
-                }
-            });
-
-            director.addEventListener("change", () => {
-                if (director.validity.valid) {
-                    director.classList.remove("border-red-700");
-                    directorUnderflow.classList.add("hidden");
-                    directorMismatch.classList.add("hidden");
-                } else if (director.validity.tooShort || director.validity.valueMissing) {
-                    director.classList.add("border-red-700");
-                    directorUnderflow.classList.remove("hidden");
-                } else if (director.validity.patternMismatch) {
-                    director.classList.add("border-red-700");
-                    directorMismatch.classList.remove("hidden");
-                } 
-            });
 
             const form = document.querySelector("form");
             button.addEventListener("click", (e) => {
                 e.preventDefault();
-                if (title.validity.valueMissing) {
-                    title.classList.add("border-red-700");
-                    empty.classList.remove("hidden");
-                } else if (title.validity.patternMismatch) {
-                    title.classList.add("border-red-700");
-                    mismatch.classList.remove("hidden");
+                if (review.validity.tooShort) {
+                    review.classList.add("border-red-700");
+                    short.classList.toggle("hidden");
+                    short.classList.toggle("flex");
+                    msg.classList.add('hidden')
                 }
-                else if (director.validity.tooShort || director.validity.valueMissing) {
-                    director.classList.add("border-red-700");
-                    directorUnderflow.classList.remove("hidden");
-                } else if (director.validity.patternMismatch) {
-                    director.classList.add("border-red-700");
-                    directorMismatch.classList.remove("hidden");
+                else if (review.validity.valueMissing && rating.getAttribute('value') == '0') {
+                    review.classList.add("border-red-700");
+                    msg.classList.toggle("hidden");
+                    msg.classList.toggle("flex");
                 } else {
                     form.submit();
                 }
             });
+            
+            const stars = document.querySelectorAll('.size-5');
+            let rated = 0;
+            // 0 -> not rated yet
+            // 0.5 -> rated half star
+            // 1 -> rated full star
+            let ratedId = -1; // id of the last star rated
+
+            stars.forEach(star => {
+                star.addEventListener('mouseleave', () => {
+                    if (!rated) {
+                        const id = star.id;
+                        const path = star.querySelector('path');
+                        path.setAttribute('fill', "var(--color-zinc-700)");
+                    } 
+                })
+
+                star.addEventListener('mouseenter', () => {
+                    if (!rated) {
+                        const id = star.id;
+                        for (let i=0; i<=id; ++i) {
+                            const path = document.getElementById(i).querySelector('path');
+                            path.setAttribute('fill', "white");
+                        }
+                        for (let i=+id+1; i<5; ++i) {
+                            if (!document.getElementById(i)) console.log(i)
+                            const path = document.getElementById(i).querySelector('path');
+                            path.setAttribute('fill', "var(--color-zinc-700)");
+                        }
+                    }
+                });
+
+                star.addEventListener('click', () => {
+                    const id = star.id;
+
+                    if (!rated || ratedId != id) {
+                        // not rated yet or rated a different star
+                        for (let i=0; i<=id; ++i) {
+                            const path = document.getElementById(i).querySelector('path');
+                            path.setAttribute('fill', "white");
+                        }
+                        for (let i=+id+1; i<5; ++i) {
+                            const path = document.getElementById(i).querySelector('path');
+                            path.setAttribute('fill', "var(--color-zinc-700)");
+                        }
+
+                        rating.setAttribute("value", +id+1);
+                        rated = 1;
+                        ratedId = id;
+                    }
+                    else if (rated == 1) {
+                        // rated full
+                        const path = star.querySelector('path')
+                        console.log('here')
+                        const fill = `url(#half-star-gradient-${id})`
+                        path.setAttribute('fill', fill);
+                        rated = 0.5
+                        rating.setAttribute('value', +id+1-0.5)
+                    }
+                    else {
+                        // rated half
+                        stars.forEach((star) => {
+                            const path = star.querySelector('path');
+                            path.setAttribute('fill', "var(--color-zinc-700)");
+                        });
+
+                        rating.setAttribute('value', 0);
+                        rated = 0;
+                        ratedId = -1;
+                    }
+                })
+            })
+
+            document.querySelector('.icon').addEventListener('mouseleave', () => {
+                stars.forEach(star => {
+                    if (!rated)
+                    star.querySelector('path').setAttribute('fill', "var(--color-zinc-700)");
+                })
+            })
         </script>
     </body>
 </html>
