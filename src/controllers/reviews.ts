@@ -6,7 +6,6 @@ import BadRequest from "../errors/BadRequest.js";
 
 const validateViewRequest = [
     param("reviewId")
-        .escape()
         .notEmpty()
         .isLength({
             max: 10,
@@ -45,7 +44,6 @@ const viewReview = [
 
 const validateParamMovieId = [
     param("movieId")
-        .escape()
         .notEmpty()
         .isLength({
             max: 10,
@@ -81,7 +79,6 @@ const addReviewForm = [
 
 const validateFormBody = [
     body("rating")
-        .escape()
         .isNumeric()
         .custom((rating) => {
             const num = +rating;
@@ -105,7 +102,7 @@ const validateFormBody = [
             return true;
         }),
 
-    body("added_by").escape(),
+    body("added_by"),
 ];
 
 const confirmAddReview = [

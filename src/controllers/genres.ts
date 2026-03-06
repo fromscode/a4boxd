@@ -67,7 +67,6 @@ function showGenreForm(req: Request, res: Response) {
 
 const validateForm = [
     body("genre")
-        .escape()
         .notEmpty()
         .withMessage("Genre cannot be empty")
         .matches(/^[0-9a-zA-Z]+([\-_]?[0-9a-zA-Z]+)*$/mv)
@@ -79,7 +78,6 @@ const validateForm = [
         .withMessage("Genre must be less than 20 characters"),
 
     body("added-by")
-        .escape()
         .isLength({ max: 30 })
         .withMessage("Username must be less than 30 characters"),
 ];
@@ -104,8 +102,8 @@ const addGenre = [
 ];
 
 const confirmDelete = [
-    param("genreId").escape().isInt({ min: 0, max: 2147483647 }),
-    body("password").escape().notEmpty(),
+    param("genreId").isInt({ min: 0, max: 2147483647 }),
+    body("password").notEmpty(),
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
@@ -132,7 +130,7 @@ const confirmDelete = [
 ];
 
 const deleteGenre = [
-    param("genreId").escape().isInt({ min: 0, max: 2147483647 }),
+    param("genreId").isInt({ min: 0, max: 2147483647 }),
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {

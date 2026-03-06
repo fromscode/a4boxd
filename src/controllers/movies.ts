@@ -20,18 +20,16 @@ const addMovie = [
 
 const validateMovieForm = [
     body("title")
-        .escape()
         .notEmpty()
         .isLength({
             max: 200,
         })
         .matches(/^[\w *\-]+$/gmv),
-    body("year").escape().notEmpty().isInt({
+    body("year").notEmpty().isInt({
         min: 1900,
         max: new Date().getFullYear(),
     }),
     body("director")
-        .escape()
         .notEmpty()
         .isLength({
             min: 2,
@@ -39,7 +37,6 @@ const validateMovieForm = [
         })
         .matches(/^[a-zA-Z]+[a-zA-Z. ]*$/gmv),
     body("genre1")
-        .escape()
         .notEmpty()
         .isInt({
             min: 1,
@@ -47,7 +44,6 @@ const validateMovieForm = [
         })
         .toInt(),
     body("genre2")
-        .escape()
         .notEmpty()
         .isInt({
             min: 0,
@@ -55,15 +51,14 @@ const validateMovieForm = [
         })
         .toInt(),
     body("genre3")
-        .escape()
         .notEmpty()
         .isInt({
             min: 0,
             max: 2147483647,
         })
         .toInt(),
-    body("desc").escape(),
-    body("added-by").escape(),
+    body("desc"),
+    body("added-by"),
 ];
 
 const confirmAddMovie = [
