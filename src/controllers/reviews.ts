@@ -174,7 +174,8 @@ const confirmDelete = [
         const password = req.body.password;
         if (password === process.env.admin_pass) {
             await queries.deleteReview(reviewId);
-            res.redirect("/");
+            if (!MovieCache.movie) res.redirect("/");
+            else res.redirect("/movies/" + MovieCache.movie.id);
             return;
         }
 
