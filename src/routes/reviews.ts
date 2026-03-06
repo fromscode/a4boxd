@@ -6,4 +6,6 @@ router.get("/view/:reviewId", reviewController.viewReview);
 
 router.get("/add/:movieId", reviewController.addReviewForm);
 
+router.post("/confirm/:movieId", reviewController.confirmAddReview);
+
 export default router;

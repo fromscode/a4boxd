@@ -1,7 +1,8 @@
 import type { NextFunction, Request, Response } from "express";
-import { validationResult, param, matchedData } from "express-validator";
+import { validationResult, param, matchedData, body } from "express-validator";
 import NotFoundError from "../errors/NotFoundError.js";
 import queries from "../db/queries.js";
+import BadRequest from "../errors/BadRequest.js";
 
 const validateViewRequest = [
     param("reviewId")
@@ -42,7 +43,7 @@ const viewReview = [
     },
 ];
 
-const validateViewFormRequest = [
+const validateParamMovieId = [
     param("movieId")
         .escape()
         .notEmpty()
@@ -57,7 +58,7 @@ const validateViewFormRequest = [
 ];
 
 const addReviewForm = [
-    ...validateViewFormRequest,
+    ...validateParamMovieId,
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
@@ -78,7 +79,64 @@ const addReviewForm = [
     },
 ];
 
+const validateFormBody = [
+    body("rating")
+        .escape()
+        .isNumeric()
+        .custom((rating) => {
+            const num = +rating;
+            const validRatings = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
+            if (!validRatings.includes(num)) return false;
+            return true;
+        })
+        .toFloat(),
+
+    body("review")
+        .trim()
+        .custom((review, { req }) => {
+            if (!review.length && req.body.rating == 0) {
+                return false;
+            }
+
+            if (review.length && review.length < 3) {
+                return false;
+            }
+
+            return true;
+        }),
+
+    body("added_by").escape(),
+];
+
+const confirmAddReview = [
+    ...validateParamMovieId,
+    ...validateFormBody,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(BadRequest);
+            return;
+        }
+
+        const { movieId, rating, review, added_by } = matchedData(req);
+        try {
+            await queries.addReview(
+                movieId,
+                rating,
+                review,
+                added_by || "Anonymous",
+            );
+        } catch (err) {
+            next(BadRequest);
+            return;
+        }
+
+        res.redirect("/movies/" + movieId);
+    },
+];
+
 export default {
     viewReview,
     addReviewForm,
+    confirmAddReview,
 };

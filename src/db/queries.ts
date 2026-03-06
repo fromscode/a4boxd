@@ -99,6 +99,19 @@ async function getReview(reviewId: number) {
     return rows[0];
 }
 
+async function addReview(
+    movieId: number,
+    rating: string,
+    review: number,
+    added_by: string,
+) {
+    await pool.query(
+        `INSERT INTO review (movie_id, rating, review, added_by, added_at) VALUES 
+        ($1, $2, $3, $4, NOW())`,
+        [movieId, rating, review, added_by],
+    );
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -109,4 +122,5 @@ export default {
     getMovie,
     getReviews,
     getReview,
+    addReview,
 };
