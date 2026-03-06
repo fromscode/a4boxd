@@ -142,8 +142,94 @@ const viewMovie = [
     },
 ];
 
+const deleteForm = [
+    ...validateMovieId,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
+
+        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
+            const movie = await queries.getMovie(movieId);
+            if (!movie) {
+                next(NotFoundError);
+                return;
+            }
+            MovieCache.movie = movie;
+        }
+
+        res.render("deleteMovie", {
+            movieId: MovieCache.movie.id,
+            msg: "",
+        });
+    },
+];
+
+const confirmDelete = [
+    ...validateMovieId,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
+
+        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
+            const movie = await queries.getMovie(movieId);
+            if (!movie) {
+                next(NotFoundError);
+                return;
+            }
+            MovieCache.movie = movie;
+        }
+
+        await queries.deleteMovie(movieId);
+        res.redirect("/");
+    },
+];
+
+const directDelete = [
+    ...validateMovieId,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
+
+        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
+            const movie = await queries.getMovie(movieId);
+            if (!movie) {
+                next(NotFoundError);
+                return;
+            }
+            MovieCache.movie = movie;
+        }
+
+        if (MovieCache.movie.added_by == "fromscode") {
+            console.log(MovieCache.movie);
+            next(BadRequest);
+            return;
+        }
+
+        await queries.deleteMovie(MovieCache.movie.id);
+        res.redirect("/");
+    },
+];
+
 export default {
     addMovie,
     confirmAddMovie,
     viewMovie,
+    deleteForm,
+    confirmDelete,
+    directDelete,
 };

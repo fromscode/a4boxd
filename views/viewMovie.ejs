@@ -34,10 +34,19 @@
                     <%= movie.description %>
                 </p>
 
-                <p class="flex justify-end items-center gap-1 tracking-tighter text-sm">
-                    <span class="text-mauve-300">added by</span>
-                    <span class="text-lg font-normal text-mauve-400"><%= movie.added_by %></span>
-                </p>
+                <div class="flex items-center gap-1 tracking-tighter text-sm mt-2 px-2">
+                    <form action="<%= movie.added_by == 'fromscode' ? '/movies/delete/'+ movie.id : '/movies/direct-delete/' + movie.id %>" method="post">
+                        <button type="submit" class="rounded-full p-2 text-red-400
+                        font-normal hover:bg-red-400 hover:text-zinc-950 cursor-pointer">
+                                Delete Movie
+                            
+                        </button>
+                    </form>
+                    <span class="flex items-center gap-1 ml-auto">
+                        <span class="text-mauve-300">added by</span>
+                        <span class="text-lg font-normal text-mauve-400"><%= movie.added_by %></span>
+                    </span>
+                </div>
             </section> 
 
             <hr class="text-mauve-600 my-2">

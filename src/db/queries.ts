@@ -116,6 +116,10 @@ async function deleteReview(reviewId: number) {
     await pool.query("DELETE FROM review WHERE id = $1", [reviewId]);
 }
 
+async function deleteMovie(movieId: number) {
+    await pool.query("DELETE FROM movie WHERE id = $1", [movieId]);
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -128,4 +132,5 @@ export default {
     getReview,
     addReview,
     deleteReview,
+    deleteMovie,
 };
