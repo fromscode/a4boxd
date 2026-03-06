@@ -91,11 +91,6 @@
                                     </svg>
                                 <% }%>    
                             </span>
-                            <span class="self-center absolute invisible right-5 chevron">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                                    <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                                </svg>                                      
-                            </span>
                         </div>
                         <p class="text-mauve-300 mt-1 font-extralight text-lg 
                         tracking-tight">
@@ -115,35 +110,28 @@
                     <hr class="text-mauve-700">
 
                     <div class="flex justify-center items-center cursor-pointer
-                    hover:underline mt-auto pt-2">
-                        <span>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
-                                <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
-                            </svg>                              
-                        </span>
-                        <a href="<%= "/movies/" + movie.id %>">
+                     mt-auto pt-2 gap-3">
+                        <a href="<%= "/movies/" + movie.id %>" class='flex hover:underline
+                            items-center'>
+                            <span>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
+                                    <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
+                                </svg>                              
+                            </span>
                             Back to All Reviews
                         </a>
+
+                        <div class="bg-red-500 rounded-full px-2 text-zinc-950
+                        font-normal hover:bg-red-400">
+                            <a href="<%= "/reviews/delete/" + review.id %>">
+                                Delete Review
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
 
         </main>
 
-        <script>
-            const lis = document.querySelectorAll('li');
-
-            lis.forEach(li => {
-                li.addEventListener('mouseenter', () => {
-                    li.querySelector('.icon').classList.add('invisible');
-                    li.querySelector('.chevron').classList.remove('invisible');
-                });
-
-                li.addEventListener('mouseleave', () => {
-                    li.querySelector('.icon').classList.remove('invisible');
-                    li.querySelector('.chevron').classList.add('invisible');
-                });
-            })
-        </script>
     </body>
 </html>

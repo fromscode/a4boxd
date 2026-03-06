@@ -4,7 +4,7 @@ import NotFoundError from "../errors/NotFoundError.js";
 import queries from "../db/queries.js";
 import BadRequest from "../errors/BadRequest.js";
 
-const validateViewRequest = [
+const validateReviewId = [
     param("reviewId")
         .notEmpty()
         .isLength({
@@ -18,7 +18,7 @@ const validateViewRequest = [
 ];
 
 const viewReview = [
-    ...validateViewRequest,
+    ...validateReviewId,
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
@@ -132,8 +132,53 @@ const confirmAddReview = [
     },
 ];
 
+const reviewDeleteForm = [
+    ...validateReviewId,
+    (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { reviewId } = matchedData(req);
+        const renderData = {
+            reviewId: reviewId,
+            msg: "",
+        };
+
+        res.render("deleteReview", renderData);
+    },
+];
+
+const confirmDelete = [
+    ...validateReviewId,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { reviewId } = matchedData(req);
+        const password = req.body.password;
+        if (password === process.env.admin_pass) {
+            await queries.deleteReview(reviewId);
+            res.redirect("/");
+            return;
+        }
+
+        res.render("deleteReview", {
+            reviewId: reviewId,
+            msg: "Password is incorrect",
+        });
+    },
+];
+
 export default {
     viewReview,
     addReviewForm,
     confirmAddReview,
+    reviewDeleteForm,
+    confirmDelete,
 };

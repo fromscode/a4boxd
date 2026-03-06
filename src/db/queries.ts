@@ -112,6 +112,10 @@ async function addReview(
     );
 }
 
+async function deleteReview(reviewId: number) {
+    await pool.query("DELETE FROM review WHERE id = $1", [reviewId]);
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -123,4 +127,5 @@ export default {
     getReviews,
     getReview,
     addReview,
+    deleteReview,
 };

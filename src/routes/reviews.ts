@@ -8,4 +8,8 @@ router.get("/add/:movieId", reviewController.addReviewForm);
 
 router.post("/confirm/:movieId", reviewController.confirmAddReview);
 
+router.get("/delete/:reviewId", reviewController.reviewDeleteForm);
+
+router.post("/confirm-delete/:reviewId", reviewController.confirmDelete);
+
 export default router;
