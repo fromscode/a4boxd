@@ -1,7 +1,11 @@
 <section class="flex flex-col h-full">
     <div class="mb-5">
         <div class="flex">
-            <h1 class="text-8xl font-normal "><%= genre.genre %></h1>
+            <h1 class="text-8xl font-normal flex-col flex-1">
+                <% genre.genre.split('').forEach(element => { %>
+                    <span class="-m-3"><%= element %></span>
+                <%}); %>
+            </h1>
             <form action="<%= `/genres/delete/${genre.id}` %>" method="post" class="ml-auto">
                 <button type="submit" class="flex gap-2 text-red-500 self-center rounded-full p-2 hover:bg-red-500 hover:text-mauve-950 font-light cursor-pointer">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="size-5">
