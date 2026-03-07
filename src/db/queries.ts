@@ -36,6 +36,7 @@ async function insertGenre(genre: string, addedBy: string) {
 }
 
 async function deleteGenre(genreId: number) {
+    await deleteMovieGenre(undefined, genreId);
     await pool.query("delete from genre where id = $1", [genreId]);
 }
 
@@ -116,8 +117,41 @@ async function deleteReview(reviewId: number) {
     await pool.query("DELETE FROM review WHERE id = $1", [reviewId]);
 }
 
+async function deleteReviewForMovie(movieId: number) {
+    await pool.query("DELETE FROM review WHERE movie_id = $1", [movieId]);
+}
+
 async function deleteMovie(movieId: number) {
+    await deleteMovieGenre(movieId);
+    await deleteReviewForMovie(movieId);
     await pool.query("DELETE FROM movie WHERE id = $1", [movieId]);
+}
+
+async function deleteMovieGenre(movieId?: number, genreId?: number) {
+    if (movieId === undefined && genreId === undefined) return;
+    if (movieId === undefined) {
+        await pool.query(
+            `
+            DELETE FROM movie_genre WHERE genre_id = $1;`,
+            [genreId],
+        );
+        return;
+    }
+
+    if (genreId === undefined) {
+        await pool.query(
+            `
+            DELETE FROM movie_genre WHERE movie_id = $1;`,
+            [movieId],
+        );
+        return;
+    }
+
+    await pool.query(
+        `
+        DELETE FROM movie_genre WHERE movie_id = $1 and genre_id = $2`,
+        [movieId, genreId],
+    );
 }
 
 export default {

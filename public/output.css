@@ -31,7 +31,6 @@
     --color-mauve-900: oklch(21.2% 0.019 322.12);
     --color-mauve-950: oklch(14.5% 0.008 326);
     --color-black: #000;
-    --color-white: #fff;
     --spacing: 0.25rem;
     --container-sm: 24rem;
     --text-sm: 0.875rem;
@@ -1462,6 +1461,21 @@
       }
     }
   }
+  .-m-1 {
+    margin: calc(var(--spacing) * -1);
+  }
+  .-m-2 {
+    margin: calc(var(--spacing) * -2);
+  }
+  .-m-3 {
+    margin: calc(var(--spacing) * -3);
+  }
+  .-m-5 {
+    margin: calc(var(--spacing) * -5);
+  }
+  .-m-10 {
+    margin: calc(var(--spacing) * -10);
+  }
   .filter {
     @layer daisyui.l1.l2.l3 {
       display: flex;
@@ -1670,12 +1684,6 @@
     width: calc(var(--spacing) * 6);
     height: calc(var(--spacing) * 6);
   }
-  .h-2 {
-    height: calc(var(--spacing) * 2);
-  }
-  .h-10 {
-    height: calc(var(--spacing) * 10);
-  }
   .h-20 {
     height: calc(var(--spacing) * 20);
   }
@@ -1721,17 +1729,17 @@
   .flex-3 {
     flex: 3;
   }
-  .flex-initial {
-    flex: 0 auto;
-  }
   .flex-shrink {
     flex-shrink: 1;
   }
-  .flex-grow {
-    flex-grow: 1;
+  .shrink {
+    flex-shrink: 1;
   }
-  .grow-0 {
-    flex-grow: 0;
+  .shrink-3 {
+    flex-shrink: 3;
+  }
+  .shrink-\[3\] {
+    flex-shrink: 3;
   }
   .border-collapse {
     border-collapse: collapse;
@@ -1781,6 +1789,9 @@
   }
   .justify-start {
     justify-content: flex-start;
+  }
+  .gap-0 {
+    gap: calc(var(--spacing) * 0);
   }
   .gap-1 {
     gap: calc(var(--spacing) * 1);
@@ -1862,14 +1873,8 @@
   .bg-mauve-950 {
     background-color: var(--color-mauve-950);
   }
-  .bg-red-300 {
-    background-color: var(--color-red-300);
-  }
   .bg-red-500 {
     background-color: var(--color-red-500);
-  }
-  .bg-zinc-700 {
-    background-color: var(--color-zinc-700);
   }
   .bg-zinc-800 {
     background-color: var(--color-zinc-800);
@@ -1969,10 +1974,6 @@
     font-size: var(--text-8xl);
     line-height: var(--tw-leading, var(--text-8xl--line-height));
   }
-  .text-base {
-    font-size: var(--text-base);
-    line-height: var(--tw-leading, var(--text-base--line-height));
-  }
   .text-lg {
     font-size: var(--text-lg);
     line-height: var(--tw-leading, var(--text-lg--line-height));
@@ -1984,10 +1985,6 @@
   .text-xl {
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
-  }
-  .font-black {
-    --tw-font-weight: var(--font-weight-black);
-    font-weight: var(--font-weight-black);
   }
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
@@ -2008,10 +2005,6 @@
   .font-normal {
     --tw-font-weight: var(--font-weight-normal);
     font-weight: var(--font-weight-normal);
-  }
-  .font-semibold {
-    --tw-font-weight: var(--font-weight-semibold);
-    font-weight: var(--font-weight-semibold);
   }
   .font-thin {
     --tw-font-weight: var(--font-weight-thin);
@@ -2052,17 +2045,8 @@
   .text-red-600 {
     color: var(--color-red-600);
   }
-  .text-red-700 {
-    color: var(--color-red-700);
-  }
   .text-zinc-300 {
     color: var(--color-zinc-300);
-  }
-  .text-zinc-400 {
-    color: var(--color-zinc-400);
-  }
-  .text-zinc-600 {
-    color: var(--color-zinc-600);
   }
   .text-zinc-950 {
     color: var(--color-zinc-950);
@@ -2131,20 +2115,6 @@
     &:hover {
       @media (hover: hover) {
         background-color: var(--color-mauve-100);
-      }
-    }
-  }
-  .hover\:bg-red-200 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-200);
-      }
-    }
-  }
-  .hover\:bg-red-300 {
-    &:hover {
-      @media (hover: hover) {
-        background-color: var(--color-red-300);
       }
     }
   }
