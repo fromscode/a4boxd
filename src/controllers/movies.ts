@@ -1,6 +1,12 @@
 import type { NextFunction, Request, Response } from "express";
 import GenreCache from "../cache/GenreCache.js";
-import { body, matchedData, param, validationResult } from "express-validator";
+import {
+    body,
+    matchedData,
+    param,
+    validationResult,
+    type FieldValidationError,
+} from "express-validator";
 import BadRequest from "../errors/BadRequest.js";
 import queries from "../db/queries.js";
 import NotFoundError from "../errors/NotFoundError.js";
@@ -171,26 +177,27 @@ const deleteForm = [
 
 const confirmDelete = [
     ...validateMovieId,
+    body("password").notEmpty(),
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
-            next(NotFoundError);
+            next(BadRequest);
             return;
         }
 
-        const { movieId } = matchedData(req);
+        const { movieId, password } = matchedData(req);
 
-        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
-            const movie = await queries.getMovie(movieId);
-            if (!movie) {
-                next(NotFoundError);
-                return;
-            }
-            MovieCache.movie = movie;
+        if (password === process.env.admin_pass) {
+            await queries.deleteMovie(movieId);
+            GenreCache.fetchGenres();
+            res.redirect("/");
+            return;
         }
 
-        await queries.deleteMovie(movieId);
-        res.redirect("/");
+        res.render("deleteMovie", {
+            movieId: movieId,
+            msg: "Password is incorrect",
+        });
     },
 ];
 
