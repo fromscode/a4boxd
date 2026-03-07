@@ -49,26 +49,59 @@
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="year" class="flex-1 text-right font-light max-w-sm"
-                            >Year:
+                        <label for="genre" class="flex-1 text-right font-light max-w-sm"
+                            >Genres:
                         </label>
-                        <select
-                            name="year"
-                            id="year"
-                            class="border border-mauve-500 p-2 pl-2 flex-3
-                            rounded-md font-light outline-0 cursor-pointer
-                            "
-                        >
-                            <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
-                                <option value="<%= i %>"
+                        <div class="flex-3 flex gap-2">
+                            <select
+                                name="genre1"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
                                     class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
                                     pl-2 pr-5"
-                                    ><%= i %></option>
-                            <% }%>
-                            <option value="1900" 
-                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                            pl-2 pr-5">Before 1940</option>
-                        </select>
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                            <select
+                                name="genre2"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >   
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5">None</option>
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                            <select
+                                name="genre3"
+                                id="genre"
+                                class="border border-mauve-500 p-2 pl-2 flex-1
+                                rounded-md font-light outline-0 cursor-pointer
+                                "
+                            >
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5">None</option>
+                                <% for (const gen of genres) { %>
+                                    <option value="<%= gen.id %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5"
+                                    ><%= gen.genre %></option>
+                                <% }%>
+                            </select>
+                        </div>
                     </div>
                 </fieldset>
 
@@ -124,60 +157,30 @@
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="genre" class="flex-1 text-right font-light max-w-sm"
-                            >Genres:
+                        <label for="year" class="flex-1 text-right font-light max-w-sm"
+                            >Year:
                         </label>
-                        <div class="flex-3 flex gap-2">
-                            <select
-                                name="genre1"
-                                id="genre"
-                                class="border border-mauve-500 p-2 pl-2 flex-1
-                                rounded-md font-light outline-0 cursor-pointer
-                                "
-                            >
-                                <% for (const gen of genres) { %>
-                                    <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
-                                <% }%>
-                            </select>
-                            <select
-                                name="genre2"
-                                id="genre"
-                                class="border border-mauve-500 p-2 pl-2 flex-1
-                                rounded-md font-light outline-0 cursor-pointer
-                                "
-                            >   
-                                <option value="0"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5">None</option>
-                                <% for (const gen of genres) { %>
-                                    <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
-                                <% }%>
-                            </select>
-                            <select
-                                name="genre3"
-                                id="genre"
-                                class="border border-mauve-500 p-2 pl-2 flex-1
-                                rounded-md font-light outline-0 cursor-pointer
-                                "
-                            >
-                                <option value="0"
-                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5">None</option>
-                                <% for (const gen of genres) { %>
-                                    <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
-                                <% }%>
-                            </select>
-                        </div>
+                        <input
+                            type="text"
+                            name="year"
+                            id="year"
+                            placeholder="<%= new Date().getFullYear() %>"
+                            class="border border-mauve-500 p-2 pl-2 flex-3
+                            rounded-md font-light outline-0
+                            "
+                            maxlength="4"
+                        >
                     </div>
+
+                    <div>
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="year-error"
+                        >
+                            Enter a valid 4-digit year between 1800 and <%= new Date().getFullYear() %>
+                        </p>
+                    </div>
+
                 </fieldset>
                 
                 <fieldset>
@@ -275,6 +278,37 @@
                 } 
             });
 
+            const year = document.getElementById('year');
+            const yearError = document.getElementById('year-error');
+
+
+            year.addEventListener("input", () => {
+                const value = year.value;
+                const numValue = +value;
+                if (value && value.length == 4 && !!numValue 
+                && 1800 <= numValue && numValue <= new Date().getFullYear() ) {
+                    console.log('eer');
+                    year.classList.remove('border-red-700');
+                    yearError.classList.add('hidden')
+
+                }
+            });        
+
+            year.addEventListener("change", () => {
+                const value = year.value;
+                const numValue = +value;
+                if (value && value.length == 4 && !!numValue 
+                && 1800 <= numValue && numValue <= new Date().getFullYear() ) {
+                    console.log('eer');
+                    year.classList.remove('border-red-700');
+                    yearError.classList.add('hidden')
+
+                } else  {
+                    year.classList.add("border-red-700");
+                    yearError.classList.remove("hidden");
+                }
+            });        
+
             const form = document.querySelector("form");
             button.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -291,8 +325,18 @@
                 } else if (director.validity.patternMismatch) {
                     director.classList.add("border-red-700");
                     directorMismatch.classList.remove("hidden");
-                } else {
-                    form.submit();
+                } 
+                else {
+                    const value = year.value;
+                    const numValue = +value;
+                    if (!value || value.length != 4 || !numValue
+                        || 1800 > numValue || numValue > new Date().getFullYear()) {
+                        year.classList.add('border-red-700');
+                        yearError.classList.remove('hidden')
+                    }
+                    else {
+                        form.submit();
+                    }
                 }
             });
         </script>
