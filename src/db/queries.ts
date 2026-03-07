@@ -188,6 +188,45 @@ async function getMovieAndGenresByMovieId(movieId: number) {
     return rows;
 }
 
+async function updateMovie(
+    movieId: number,
+    title: string,
+    year: number,
+    dir: string,
+    desc: string,
+    genreId1: number,
+    genreId2: number,
+    genreId3: number,
+    updated_by: string,
+) {
+    await pool.query(
+        `UPDATE movie SET title = $1, year = $2, director = $3, 
+        description = $4, updated_by = $5, updated_at = NOW()
+        WHERE id = $6;`,
+        [title, year, dir, desc, updated_by, movieId],
+    );
+
+    await pool.query(`DELETE FROM movie_genre WHERE movie_id = $1`, [movieId]);
+
+    let insertQuery = `INSERT INTO movie_genre (movie_id, genre_id) VALUES ($1, $2)`;
+    let values = [movieId, genreId1];
+
+    if (genreId2 && genreId3) {
+        insertQuery += `, ($1, $3), ($1, $4)`;
+        values.push(genreId2, genreId3);
+    } else if (genreId2) {
+        insertQuery += `, ($1, $3)`;
+        values.push(genreId2);
+    } else if (genreId3) {
+        insertQuery += `, ($1, $3)`;
+        values.push(genreId3);
+    }
+
+    insertQuery += ";";
+
+    await pool.query(insertQuery, values);
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -204,4 +243,5 @@ export default {
     getMoviesWithNoGenres,
     countMoviesWithNoGenres,
     getMovieAndGenresByMovieId,
+    updateMovie,
 };

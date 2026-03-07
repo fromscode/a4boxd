@@ -65,7 +65,7 @@ const validateMovieForm = [
         })
         .toInt(),
     body("desc"),
-    body("added-by"),
+    body("username").default("Anonymous"),
 ];
 
 const confirmAddMovie = [
@@ -95,12 +95,12 @@ const confirmAddMovie = [
             genre1,
             genre2,
             genre3,
-            sanitized.added_by || "Anonymous",
+            sanitized.username || "Anonymous",
         );
 
-        GenreCache.fetchGenres();
+        await GenreCache.fetchGenres();
 
-        res.redirect("/");
+        res.redirect("/genres/view/" + genre1);
     },
 ];
 
@@ -195,10 +195,81 @@ const confirmDelete = [
     },
 ];
 
+const viewEditMovieForm = [
+    ...validateMovieId,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        const { movieId } = matchedData(req);
+
+        await MovieCache.fetchMovieIfDifferent(movieId);
+
+        if (MovieCache.isEmpty()) {
+            next(NotFoundError);
+            return;
+        }
+
+        if (GenreCache.isEmpty()) await GenreCache.fetchGenres();
+
+        const renderData = {
+            movie: MovieCache.movie,
+            genres: GenreCache.genres,
+            movieGenres: MovieCache.genres,
+        };
+
+        res.render("editMovie", renderData);
+    },
+];
+
+const editMovie = [
+    ...validateMovieId,
+    ...validateMovieForm,
+    async (req: Request, res: Response, next: NextFunction) => {
+        const result = validationResult(req);
+        if (!result.isEmpty()) {
+            BadRequest.errors = result.array();
+            next(BadRequest);
+            return;
+        }
+
+        const sanitized = matchedData(req);
+        const maxId = GenreCache.maxId();
+
+        const { genre1, genre2, genre3 } = sanitized;
+        if (genre1 > maxId || genre2 > maxId || genre3 > maxId) {
+            next(BadRequest);
+            return;
+        }
+
+        await queries.updateMovie(
+            sanitized.movieId,
+            sanitized.title,
+            sanitized.year,
+            sanitized.director,
+            sanitized.desc,
+            genre1,
+            genre2,
+            genre3,
+            sanitized.username || "Anonymous",
+        );
+
+        await GenreCache.fetchGenres();
+        await MovieCache.fetchMovie(sanitized.movieId);
+
+        res.redirect("/movies/view/" + sanitized.movieId);
+    },
+];
+
 export default {
     addMovie,
     confirmAddMovie,
     viewMovie,
     deleteForm,
     confirmDelete,
+    viewEditMovieForm,
+    editMovie,
 };

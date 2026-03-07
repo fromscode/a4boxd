@@ -6,6 +6,11 @@ class MovieCache {
 
     async fetchMovie(movieId: number) {
         const rows = await queries.getMovieAndGenresByMovieId(movieId);
+        if (!rows || !rows.length) {
+            this.movie = null;
+            this.genres = [];
+            return;
+        }
         const {
             id,
             title,

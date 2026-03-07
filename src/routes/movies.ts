@@ -13,4 +13,8 @@ router.post("/delete/:movieId", movieController.deleteForm);
 
 router.post("/confirm-delete/:movieId", movieController.confirmDelete);
 
+router.get("/edit/:movieId", movieController.viewEditMovieForm);
+
+router.post("/edit/:movieId", movieController.editMovie);
+
 export default router;

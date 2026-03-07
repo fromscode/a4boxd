@@ -11,7 +11,7 @@
         <%- include('navbar') %>
         <div class="flex-1 justify-center flex items-center">
             <form
-                action="confirm"
+                action="<%= "/movies/edit/" + movie.id %>"
                 method="post"
                 class="border border-mauve-300 p-8 flex flex-col gap-10"
             >
@@ -24,7 +24,7 @@
                             type="text"
                             name="title"
                             id="title"
-                            placeholder="Seven Samurai"
+                            value="<%= movie.title %>"
                             class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
                             pattern="[\w *\-]+"
                             maxlength="200"
@@ -60,10 +60,17 @@
                             "
                         >
                             <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
-                                <option value="<%= i %>"
+                                <% if (i == movie.year) { %>
+                                    <option value="<%= i %>"
+                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5" selected
+                                    ><%= i %></option>    
+                                <% } else { %>
+                                    <option value="<%= i %>"
                                     class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
                                     pl-2 pr-5"
                                     ><%= i %></option>
+                                <% }%>
                             <% }%>
                             <option value="1900" 
                             class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
@@ -81,7 +88,7 @@
                             type="text"
                             name="director"
                             id="director"
-                            placeholder="Akira Kurosawa"
+                            value="<%= movie.director %>"
                             class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
                             pattern="[a-zA-Z]+[a-zA-Z. ]*"
                             minlength="3"
@@ -89,7 +96,7 @@
                             required
                         />
                     </div>
-                    <div id="title-errors">
+                    <div id="director-errors">
                         <p
                             class="font-light text-red-600 text-center mt-2 hidden"
                             id="director-underflow"
@@ -117,8 +124,7 @@
                             class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
                             font-light outline-0 w-sm resize-none text-mauve-200"
                             placeholder="Seven Samurais. One Village. Total Action."
-                            required
-                        ></textarea>
+                        ><%= movie.description %></textarea>
                     </div>
                 </fieldset>
 
@@ -136,10 +142,17 @@
                                 "
                             >
                                 <% for (const gen of genres) { %>
-                                    <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
+                                    <% if (movieGenres.length >= 1 && movieGenres[0].id == gen.id) { %>
+                                        <option value="<%= gen.id %>"
+                                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                        pl-2 pr-5" selected
+                                        ><%= gen.genre %></option>
+                                    <% } else { %>
+                                        <option value="<%= gen.id %>"
+                                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                        pl-2 pr-5"
+                                        ><%= gen.genre %></option>
+                                    <% }%>
                                 <% }%>
                             </select>
                             <select
@@ -149,15 +162,31 @@
                                 rounded-md font-light outline-0 cursor-pointer
                                 "
                             >   
+
+                            <% if (movieGenres.length < 2 ) { %>
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5" selected>None</option>
+                            <% } else { %>
                                 <option value="0"
                                 class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
                                     pl-2 pr-5">None</option>
-                                <% for (const gen of genres) { %>
+                            <% }%>
+                            
+                            <% for (const gen of genres) { %>
+                                <% if (movieGenres.length >= 2 && movieGenres[1].id == gen.id) { %>
                                     <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
+                                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                        pl-2 pr-5"
+                                        selected><%= gen.genre %></option>
+                                <% } else { %>
+                                    <option value="<%= gen.id %>"
+                                        class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                        pl-2 pr-5"
+                                        ><%= gen.genre %></option>
                                 <% }%>
+                                
+                            <% }%>
                             </select>
                             <select
                                 name="genre3"
@@ -166,14 +195,29 @@
                                 rounded-md font-light outline-0 cursor-pointer
                                 "
                             >
+                            <% if (movieGenres.length < 3 ) { %>
+                                <option value="0"
+                                class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                    pl-2 pr-5" selected>None</option>
+                            <% } else { %>
                                 <option value="0"
                                 class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
                                     pl-2 pr-5">None</option>
+                            <% }%>
+                            
                                 <% for (const gen of genres) { %>
-                                    <option value="<%= gen.id %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= gen.genre %></option>
+                                    <% if (movieGenres.length >= 3 && movieGenres[2].id == gen.id) { %>
+                                        <option value="<%= gen.id %>"
+                                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                            pl-2 pr-5"
+                                            selected><%= gen.genre %></option>
+                                    <% } else { %>
+                                        <option value="<%= gen.id %>"
+                                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
+                                            pl-2 pr-5"
+                                            ><%= gen.genre %></option>
+                                    <% }%>
+                                    
                                 <% }%>
                             </select>
                         </div>
@@ -190,6 +234,7 @@
                             name="username"
                             id="username"
                             placeholder="fromscode"
+                            value="<%= movie.updated_by === 'Anonymous' ? '' : movie.updated_by %>"
                             maxlength="30"
                             class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
                         />
@@ -201,7 +246,7 @@
                         type="submit"
                         class="border-2 py-1 px-5 border-mauve-600 rounded-full cursor-pointer hover:bg-mauve-100 hover:text-mauve-950 hover:border-mauve-100"
                     >
-                        Add
+                        Submit
                     </button>
                 </div>
             </form>
