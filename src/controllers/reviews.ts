@@ -110,7 +110,7 @@ const validateFormBody = [
             return true;
         }),
 
-    body("added_by"),
+    body("added-by").default("Anonymous"),
 ];
 
 const confirmAddReview = [
@@ -123,20 +123,20 @@ const confirmAddReview = [
             return;
         }
 
-        const { movieId, rating, review, added_by } = matchedData(req);
+        const data = matchedData(req);
         try {
             await queries.addReview(
-                movieId,
-                rating,
-                review,
-                added_by || "Anonymous",
+                data.movieId,
+                data.rating,
+                data.review,
+                data["added-by"],
             );
         } catch (err) {
             next(BadRequest);
             return;
         }
 
-        res.redirect("/movies/" + movieId);
+        res.redirect("/movies/view/" + data.movieId);
     },
 ];
 
@@ -173,7 +173,7 @@ const confirmDelete = [
         if (password === process.env.admin_pass) {
             await queries.deleteReview(reviewId);
             if (!MovieCache.movie) res.redirect("/");
-            else res.redirect("/movies/" + MovieCache.movie.id);
+            else res.redirect("/movies/view/" + MovieCache.movie.id);
             return;
         }
 
