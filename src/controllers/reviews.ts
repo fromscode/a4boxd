@@ -37,14 +37,12 @@ const viewReview = [
 
         const movieId = review.movie_id;
 
-        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
-            const movie = await queries.getMovie(movieId);
-            MovieCache.movie = movie;
-        }
+        await MovieCache.fetchMovieIfDifferent(movieId);
 
         const renderData = {
             review: review,
             movie: MovieCache.movie,
+            genres: MovieCache.genres,
         };
 
         res.render("viewReview", renderData);

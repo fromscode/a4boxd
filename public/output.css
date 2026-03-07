@@ -1139,6 +1139,9 @@
   .bg-red-500 {
     background-color: var(--color-red-500);
   }
+  .bg-zinc-700 {
+    background-color: var(--color-zinc-700);
+  }
   .bg-zinc-800 {
     background-color: var(--color-zinc-800);
   }

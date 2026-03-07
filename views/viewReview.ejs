@@ -30,6 +30,19 @@
                     </span>
                 </div>
 
+                <% if (genres && genres.length) { %>
+                    <div class="flex gap-2">
+                        <% genres.forEach(genre => { %>
+                            <a href="<%= '/genres/view/' + genre.id %>">
+                                <div class="bg-zinc-800 px-3 py-1 rounded-full
+                                cursor-pointer hover:bg-zinc-700">
+                                    <%= genre.genre %>
+                                </div>
+                            </a>
+                        <% }); %>
+                    </div>
+                <% } %>
+
                 <p class="text-mauve-200 mt-4 font-light">
                     <%= movie.description %>
                 </p>

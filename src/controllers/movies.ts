@@ -128,20 +128,14 @@ const viewMovie = [
 
         const { movieId } = matchedData(req);
 
-        if (!MovieCache.movie || MovieCache.movie.id != movieId) {
-            const movie = await queries.getMovie(movieId);
-            if (!movie) {
-                next(NotFoundError);
-                return;
-            }
-            MovieCache.movie = movie;
-        }
+        await MovieCache.fetchMovieIfDifferent(movieId);
 
         const reviews = await queries.getReviews(movieId);
 
         const renderData = {
             movie: MovieCache.movie,
             reviews: reviews,
+            genres: MovieCache.genres,
         };
 
         res.render("viewMovie", renderData);
