@@ -35,7 +35,7 @@
                 </p>
 
                 <div class="flex items-center gap-1 tracking-tighter text-sm mt-2 px-2">
-                    <form action="<%= movie.added_by == 'fromscode' ? '/movies/delete/'+ movie.id : '/movies/direct-delete/' + movie.id %>" method="post">
+                    <form action="<%= '/movies/delete/'+ movie.id %>" method="post">
                         <button type="submit" class="rounded-full p-2 text-red-400
                         font-normal hover:bg-red-400 hover:text-zinc-950 cursor-pointer">
                                 Delete Movie
