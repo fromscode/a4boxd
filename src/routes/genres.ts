@@ -10,8 +10,8 @@ router.get("/add", genreRouter.showGenreForm);
 
 router.post("/add", genreRouter.addGenre);
 
-router.post("/confirm-delete/:genreId", genreRouter.confirmDelete);
+router.get("/delete/:genreId", genreRouter.deleteGenre);
 
-router.post("/delete/:genreId", genreRouter.deleteGenre);
+router.post("/delete/:genreId", genreRouter.confirmDelete);
 
 export default router;

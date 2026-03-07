@@ -136,7 +136,7 @@ const confirmDelete = [
             return;
         }
 
-        res.render("confirm_delete_genre", {
+        res.render("deleteGenre", {
             id: genreId,
             msg: "Password is incorrect",
         });
@@ -152,7 +152,7 @@ const deleteGenre = [
             return;
         }
         const genreId = +(req.params.genreId as string);
-        res.render("confirm_delete_genre", { id: genreId, msg: null });
+        res.render("deleteGenre", { id: genreId, msg: null });
     },
 ];
 
