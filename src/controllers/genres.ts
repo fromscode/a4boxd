@@ -56,6 +56,7 @@ const getGenre = [
             genres: genreCache.genres,
             genre: genre,
             movies: movies,
+            noGenreCount: 0, // TO-DO: change later
         };
         res.render("index", renderData);
     },

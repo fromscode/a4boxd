@@ -154,6 +154,16 @@ async function deleteMovieGenre(movieId?: number, genreId?: number) {
     );
 }
 
+async function getMoviesWithNoGenres() {
+    const query = `
+    select m.*
+    from movie m left join movie_genre g on m.id = g.movie_id
+    where genre_id is null`;
+
+    const { rows } = await pool.query(query);
+    return rows;
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -167,4 +177,5 @@ export default {
     addReview,
     deleteReview,
     deleteMovie,
+    getMoviesWithNoGenres,
 };
