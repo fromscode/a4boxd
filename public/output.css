@@ -7,6 +7,7 @@
       "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
       "Courier New", monospace;
+    --color-red-50: oklch(97.1% 0.013 17.38);
     --color-red-200: oklch(88.5% 0.062 18.334);
     --color-red-300: oklch(80.8% 0.114 19.571);
     --color-red-400: oklch(70.4% 0.191 22.216);
@@ -1545,6 +1546,9 @@
   .mt-auto {
     margin-top: auto;
   }
+  .-mr-3 {
+    margin-right: calc(var(--spacing) * -3);
+  }
   .mr-auto {
     margin-right: auto;
   }
@@ -1553,6 +1557,9 @@
   }
   .mb-5 {
     margin-bottom: calc(var(--spacing) * 5);
+  }
+  .-ml-3 {
+    margin-left: calc(var(--spacing) * -3);
   }
   .ml-auto {
     margin-left: auto;
@@ -1873,6 +1880,9 @@
   .bg-mauve-950 {
     background-color: var(--color-mauve-950);
   }
+  .bg-red-50 {
+    background-color: var(--color-red-50);
+  }
   .bg-red-500 {
     background-color: var(--color-red-500);
   }
@@ -2090,6 +2100,41 @@
   .ease-in-out {
     --tw-ease: var(--ease-in-out);
     transition-timing-function: var(--ease-in-out);
+  }
+  .first\:m-0 {
+    &:first-child {
+      margin: calc(var(--spacing) * 0);
+    }
+  }
+  .first\:-mr-2 {
+    &:first-child {
+      margin-right: calc(var(--spacing) * -2);
+    }
+  }
+  .first\:-mr-3 {
+    &:first-child {
+      margin-right: calc(var(--spacing) * -3);
+    }
+  }
+  .first\:-ml-0 {
+    &:first-child {
+      margin-left: calc(var(--spacing) * -0);
+    }
+  }
+  .first\:-ml-1 {
+    &:first-child {
+      margin-left: calc(var(--spacing) * -1);
+    }
+  }
+  .first\:-ml-3 {
+    &:first-child {
+      margin-left: calc(var(--spacing) * -3);
+    }
+  }
+  .first\:ml-0 {
+    &:first-child {
+      margin-left: calc(var(--spacing) * 0);
+    }
   }
   .first\:rounded-t-xl {
     &:first-child {

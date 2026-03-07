@@ -3,7 +3,7 @@
         <div class="flex">
             <h1 class="text-8xl font-normal flex-col flex-1">
                 <% genre.genre.split('').forEach(element => { %>
-                    <span class="-m-3"><%= element %></span>
+                    <span class="-m-3 first:-ml-1"><%= element %></span>
                 <%}); %>
             </h1>
             <form action="<%= `/genres/delete/${genre.id}` %>" method="post" class="ml-auto">
