@@ -26,7 +26,7 @@ const getGenre = [
 
         const { genreId } = matchedData(req);
         if (genreId == 0) {
-            res.redirect("/");
+            getNoGenre(req, res);
             return;
         }
 
@@ -51,6 +51,29 @@ const getGenre = [
         res.render("index", renderData);
     },
 ];
+
+const getNoGenre = async (req: Request, res: Response) => {
+    const movies = await queries.getMoviesWithNoGenres();
+    const noGenre = {
+        id: 0,
+        genre: "No-Genre",
+        count: genreCache.noGenreCount,
+        added_by: "fromscode",
+    };
+
+    if (genreCache.isEmpty()) {
+        await genreCache.fetchGenres();
+    }
+
+    const renderData = {
+        genres: genreCache.genres,
+        genre: noGenre,
+        movies: movies,
+        noGenreCount: genreCache.noGenreCount,
+    };
+
+    res.render("index", renderData);
+};
 
 function showGenreForm(req: Request, res: Response) {
     res.render("addGenre");
