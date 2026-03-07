@@ -2,9 +2,11 @@ import queries from "../db/queries.js";
 
 class GenreCache {
     genres: any[] = [];
+    noGenreCount: number = 0;
 
     async fetchGenres() {
         this.genres = await queries.getAllGenresSortedByMovies();
+        this.noGenreCount = (await queries.countMoviesWithNoGenres()).count;
     }
 
     isEmpty() {

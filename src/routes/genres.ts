@@ -4,7 +4,9 @@ import genreRouter from "../controllers/genres.js";
 
 const router = express.Router();
 
-router.get("/:param", genreRouter.getGenre);
+router.get("/view/:genreId", genreRouter.getGenre);
+
+router.get("/add", genreRouter.showGenreForm);
 
 router.post("/add", genreRouter.addGenre);
 

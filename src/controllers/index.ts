@@ -15,7 +15,7 @@ async function getHome(req: Request, res: Response) {
         genres: genreCache.genres,
         genre: genreCache.genres[0],
         movies: movies,
-        noGenreCount: 0, // TO-DO: change later
+        noGenreCount: genreCache.noGenreCount,
     };
 
     res.render("index", renderData);

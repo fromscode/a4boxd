@@ -11,21 +11,12 @@ import {
 import NotFoundError from "../errors/NotFoundError.js";
 import BadRequest from "../errors/BadRequest.js";
 
-const validateGetRequest = param("param").custom((value) => {
-    if (!value) return false;
-    if (value == "add") return true;
-    const numericValue = +value;
-    if (
-        (!numericValue && numericValue != 0) ||
-        numericValue < 0 ||
-        numericValue > 2147483647
-    )
-        return false;
-    return true;
-});
+const validateGenreId = param("genreId")
+    .isInt({ min: 0, max: 2147483647 })
+    .toInt();
 
 const getGenre = [
-    validateGetRequest,
+    validateGenreId,
     async (req: Request, res: Response, next: NextFunction) => {
         const result = validationResult(req);
         if (!result.isEmpty()) {
@@ -33,13 +24,12 @@ const getGenre = [
             return;
         }
 
-        const param = req.params.param as string;
-        if (param == "add") {
-            showGenreForm(req, res);
+        const { genreId } = matchedData(req);
+        if (genreId == 0) {
+            res.redirect("/");
             return;
         }
 
-        const genreId = +param;
         const genre = await genreCache.getGenre(genreId);
 
         if (!genre) {
@@ -56,7 +46,7 @@ const getGenre = [
             genres: genreCache.genres,
             genre: genre,
             movies: movies,
-            noGenreCount: 0, // TO-DO: change later
+            noGenreCount: genreCache.noGenreCount,
         };
         res.render("index", renderData);
     },
@@ -148,4 +138,5 @@ export default {
     addGenre,
     confirmDelete,
     deleteGenre,
+    showGenreForm,
 };

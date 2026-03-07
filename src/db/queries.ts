@@ -164,6 +164,17 @@ async function getMoviesWithNoGenres() {
     return rows;
 }
 
+async function countMoviesWithNoGenres() {
+    const query = `
+    select count(m.id)
+    from movie m left join movie_genre g on m.id = g.movie_id
+    where genre_id is null
+    `;
+
+    const { rows } = await pool.query(query);
+    return rows[0];
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -178,4 +189,5 @@ export default {
     deleteReview,
     deleteMovie,
     getMoviesWithNoGenres,
+    countMoviesWithNoGenres,
 };
