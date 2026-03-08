@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Home</title>
+        <link rel="stylesheet" href="/output.css" />
+    </head>
+    <body
+        class="font-display tracking-tight font-extralight bg-mauve-950 flex flex-col min-h-screen overflow-hidden"
+    >
+        <%- include('navbar') %>
+        <main class="my-2 mx-5">
+            <h1 class="text-6xl font-light">Search Results: </h1>
+
+            <section class="text-mauve-300 my-4 mx-5 text-lg">
+                <% if ((!movies || !movies.length) && (!genres || !genres.length)) { %>
+                    <div>No matching search results found</div>
+                <% }%>
+                
+                <% if (movies && movies.length) { %>
+                    <div class="my-4">
+                        <h2 class="text-3xl mb-2">Movies: </h2>
+                        <ul class="mx-10">
+                        <% movies.forEach(element => { %>
+                            <li class="mb-1 underline hover:no-underline w-fit">
+                                <a href="<%= "/movies/view/" + element.id %>">
+                                    <%= element.title %>
+                                </a></li> 
+                        <% }); %>
+                        </ul>
+                    </div>
+                <% } %>
+
+                <% if (genres && genres.length) { %>
+                    <div class="my-5">
+                        <h2 class="text-3xl mb-2">Genres: </h2>
+                        <ul class="mx-10">
+                        <% genres.forEach(element => { %>
+                            <li class="mb-1 underline hover:no-underline w-fit">
+                                <a href="<%= '/genres/view/' + element.id %>">
+                                    <%= element.genre %>
+                                </a></li> 
+                        <% }); %>
+                        </ul>
+                    </div>
+                <% } %>
+
+                <p class="text-lg">Showing results for search param: "<%= param %>"</p>
+            </section>
+
+
+        </main>
+    </body>
+</html>

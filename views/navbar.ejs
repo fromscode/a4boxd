@@ -1,8 +1,49 @@
 <nav class="w-full">
-    <div class="p-2">
+    <div class="p-2 flex items-center">
         <a href="/">
             <div class="p-4 font-[Logo] text-4xl">a4boxd</div>
         </a>
+
+        <form
+            action="/search/"
+            method="post"
+            class="ml-auto flex items-center gap-1"
+        >
+            <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="Search | Ctrl + K"
+                class="border-2 border-zinc-600 ml-auto rounded-full px-5 py-0 h-12 text-lg font-light w-2xs"
+            />
+
+            <button
+                type="submit"
+                class="bg-zinc-800 h-12 py-2 px-1 border border-zinc-600 cursor-pointer hover:bg-zinc-600"
+            >
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    class="size-5"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M9 3.5a5.5 5.5 0 1 0 0 11 5.5 5.5 0 0 0 0-11ZM2 9a7 7 0 1 1 12.452 4.391l3.328 3.329a.75.75 0 1 1-1.06 1.06l-3.329-3.328A7 7 0 0 1 2 9Z"
+                        clip-rule="evenodd"
+                    />
+                </svg>
+            </button>
+        </form>
     </div>
     <hr class="text-mauve-700" />
+
+    <script type="module">
+        document.addEventListener("keydown", (e) => {
+            if (e.ctrlKey && (e.key == "k" || e.key == "K")) {
+                e.preventDefault();
+                document.querySelector("nav input").focus();
+            }
+        });
+    </script>
 </nav>

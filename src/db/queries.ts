@@ -227,6 +227,26 @@ async function updateMovie(
     await pool.query(insertQuery, values);
 }
 
+async function search(param: string) {
+    const searchParam = "%" + param.split("").join("%") + "%";
+    let movies = await pool.query(
+        `
+        SELECT * FROM movie WHERE title like $1`,
+        [searchParam],
+    );
+
+    let genres = await pool.query(`SELECT * FROM genre WHERE genre like $1`, [
+        searchParam,
+    ]);
+
+    const res = {
+        movies: movies.rows,
+        genres: genres.rows,
+    };
+
+    return res;
+}
+
 export default {
     getAllGenres,
     getAllGenresSortedByMovies,
@@ -244,4 +264,5 @@ export default {
     countMoviesWithNoGenres,
     getMovieAndGenresByMovieId,
     updateMovie,
+    search,
 };
