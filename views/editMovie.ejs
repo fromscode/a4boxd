@@ -49,87 +49,6 @@
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="year" class="flex-1 text-right font-light max-w-sm"
-                            >Year:
-                        </label>
-                        <select
-                            name="year"
-                            id="year"
-                            class="border border-mauve-500 p-2 pl-2 flex-3
-                            rounded-md font-light outline-0 cursor-pointer
-                            "
-                        >
-                            <% for (let i=new Date().getFullYear(); i>=1940; --i) { %>
-                                <% if (i == movie.year) { %>
-                                    <option value="<%= i %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5" selected
-                                    ><%= i %></option>    
-                                <% } else { %>
-                                    <option value="<%= i %>"
-                                    class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                                    pl-2 pr-5"
-                                    ><%= i %></option>
-                                <% }%>
-                            <% }%>
-                            <option value="1900" 
-                            class="bg-zinc-900 hover:bg-zinc-800 rounded-xl text-mauve-300 py-2 font-thin
-                            pl-2 pr-5">Before 1940</option>
-                        </select>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <div class="flex gap-5">
-                        <label for="director" class="flex-1 text-right font-light"
-                            >Director:
-                        </label>
-                        <input
-                            type="text"
-                            name="director"
-                            id="director"
-                            value="<%= movie.director %>"
-                            class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
-                            pattern="[a-zA-Z]+[a-zA-Z. ]*"
-                            minlength="3"
-                            maxlength="30"
-                            required
-                        />
-                    </div>
-                    <div id="director-errors">
-                        <p
-                            class="font-light text-red-600 text-center mt-2 hidden"
-                            id="director-underflow"
-                        >
-                            Director's name must be at least 3 characters
-                        </p>
-                        <p
-                            class="font-light text-red-600 text-center mt-2 hidden"
-                            id="director-mismatch"
-                        >
-                        Director's name cannot contain any special characters
-                        </p>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <div class="flex gap-5">
-                        <label for="desc" class="flex-1 text-right font-light"
-                            >Description:
-                        </label>
-                        <textarea
-                            type="text"
-                            name="desc"
-                            id="desc"
-                            class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
-                            font-light outline-0 w-sm resize-none text-mauve-200"
-                            placeholder="Seven Samurais. One Village. Total Action."
-                        ><%= movie.description %></textarea>
-                    </div>
-                </fieldset>
-
-                <fieldset>
-                    <div class="flex gap-5">
                         <label for="genre" class="flex-1 text-right font-light max-w-sm"
                             >Genres:
                         </label>
@@ -222,6 +141,83 @@
                             </select>
                         </div>
                     </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="director" class="flex-1 text-right font-light"
+                            >Director:
+                        </label>
+                        <input
+                            type="text"
+                            name="director"
+                            id="director"
+                            value="<%= movie.director %>"
+                            class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light outline-0 w-sm"
+                            pattern="[a-zA-Z]+[a-zA-Z. ]*"
+                            minlength="3"
+                            maxlength="30"
+                            required
+                        />
+                    </div>
+                    <div id="director-errors">
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="director-underflow"
+                        >
+                            Director's name must be at least 3 characters
+                        </p>
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="director-mismatch"
+                        >
+                        Director's name cannot contain any special characters
+                        </p>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="desc" class="flex-1 text-right font-light"
+                            >Description:
+                        </label>
+                        <textarea
+                            type="text"
+                            name="desc"
+                            id="desc"
+                            class="border border-mauve-500 flex-3 pl-2 py-1 h-20 rounded-md 
+                            font-light outline-0 w-sm resize-none text-mauve-200"
+                            placeholder="Seven Samurais. One Village. Total Action."
+                        ><%= movie.description %></textarea>
+                    </div>
+                </fieldset>
+
+                <fieldset>
+                    <div class="flex gap-5">
+                        <label for="year" class="flex-1 text-right font-light max-w-sm"
+                            >Year:
+                        </label>
+                        <input
+                            type="text"
+                            name="year"
+                            id="year"
+                            value="<%= movie.year || "" %>"
+                            class="border border-mauve-500 p-2 pl-2 flex-3
+                            rounded-md font-light outline-0
+                            "
+                            maxlength="4"
+                        >
+                    </div>
+
+                    <div>
+                        <p
+                            class="font-light text-red-600 text-center mt-2 hidden"
+                            id="year-error"
+                        >
+                            Enter a valid 4-digit year between 1800 and <%= new Date().getFullYear() %>
+                        </p>
+                    </div>
+
                 </fieldset>
                 
                 <fieldset>
@@ -320,6 +316,37 @@
                 } 
             });
 
+            const year = document.getElementById('year');
+            const yearError = document.getElementById('year-error');
+
+
+            year.addEventListener("input", () => {
+                const value = year.value;
+                const numValue = +value;
+                if (value && value.length == 4 && !!numValue 
+                && 1800 <= numValue && numValue <= new Date().getFullYear() ) {
+                    console.log('eer');
+                    year.classList.remove('border-red-700');
+                    yearError.classList.add('hidden')
+
+                }
+            });        
+
+            year.addEventListener("change", () => {
+                const value = year.value;
+                const numValue = +value;
+                if (value && value.length == 4 && !!numValue 
+                && 1800 <= numValue && numValue <= new Date().getFullYear() ) {
+                    console.log('eer');
+                    year.classList.remove('border-red-700');
+                    yearError.classList.add('hidden')
+
+                } else  {
+                    year.classList.add("border-red-700");
+                    yearError.classList.remove("hidden");
+                }
+            });        
+
             const form = document.querySelector("form");
             button.addEventListener("click", (e) => {
                 e.preventDefault();
@@ -336,8 +363,18 @@
                 } else if (director.validity.patternMismatch) {
                     director.classList.add("border-red-700");
                     directorMismatch.classList.remove("hidden");
-                } else {
-                    form.submit();
+                } 
+                else {
+                    const value = year.value;
+                    const numValue = +value;
+                    if (!value || value.length != 4 || !numValue
+                    || 1800 > numValue || numValue > new Date().getFullYear()) {
+                        year.classList.add('border-red-700');
+                        yearError.classList.remove('hidden')
+                    }
+                    else {
+                        form.submit();
+                    }
                 }
             });
         </script>
