@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="/output.css" />
         <link rel="stylesheet" href="/addMovie.css" />
     </head>
-    <body class="bg-mauve-950 h-screen flex flex-col justify-center items-center">
+    <body class="bg-mauve-950 min-h-screen flex flex-col justify-center items-center">
         <%- include('navbar') %>
         <div class="flex-1 justify-center flex items-center">
             <form
@@ -49,13 +49,13 @@
 
                 <fieldset>
                     <div class="flex gap-5">
-                        <label for="genre" class="flex-1 text-right font-light max-w-sm"
+                        <label for="genre1" class="flex-1 text-right font-light max-w-sm"
                             >Genres:
                         </label>
                         <div class="flex-3 flex gap-2">
                             <select
                                 name="genre1"
-                                id="genre"
+                                id="genre1"
                                 class="border border-mauve-500 p-2 pl-2 flex-1
                                 rounded-md font-light outline-0 cursor-pointer
                                 "
@@ -76,7 +76,7 @@
                             </select>
                             <select
                                 name="genre2"
-                                id="genre"
+                                id="genre2"
                                 class="border border-mauve-500 p-2 pl-2 flex-1
                                 rounded-md font-light outline-0 cursor-pointer
                                 "
@@ -109,7 +109,7 @@
                             </select>
                             <select
                                 name="genre3"
-                                id="genre"
+                                id="genre3"
                                 class="border border-mauve-500 p-2 pl-2 flex-1
                                 rounded-md font-light outline-0 cursor-pointer
                                 "
@@ -233,6 +233,7 @@
                             value="<%= movie.updated_by === 'Anonymous' ? '' : movie.updated_by %>"
                             maxlength="30"
                             class="border border-mauve-500 flex-3 p-2 pl-2 rounded-md font-light w-sm"
+                            autocomplete="username"
                         />
                     </div>
                 </fieldset>
